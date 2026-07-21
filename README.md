@@ -1,39 +1,29 @@
-# HEXAGON-AL · Landschaft legen
+# HEXAGON-AL · gemalte Landschaft legen
 
-Bemalte Habitat-Hexes drehen und anlegen — Cascadia-Richtung. Sechs Welten, Druckbögen.
+Ausschneidbare **Landschafts-Hexes**: Biotope + Pfade, Abzweige, Brücken, Sturzbrücken, Höhlen, Wasserfälle, Ruinen, Ereignisse. Drehen · anlegen · Landschaft wächst.
 
-## Live (GitHub Pages)
-
+## Live
 **https://ralfarminkirchner-netizen.github.io/hexagon-al-spiel/**
 
-| Link | |
-|------|--|
-| Spiel | [SPIEL.html](SPIEL.html) |
-| Druck | [DRUCK.html](DRUCK.html) |
+| | |
+|--|--|
+| Spielen | [SPIEL.html](SPIEL.html) |
+| Drucken | [DRUCK.html](DRUCK.html) |
+| Vorschau aller Kacheln | [assets/contact-sheet.png](assets/contact-sheet.png) |
 
-## Lokal
+## Inhalt
+- 64 gebackene Landschaftskacheln (`assets/tiles/`, 512px)
+- Features: `pfad`, `abzweig`, `bruecke`, `sturzbruecke`, `hoehle`, `wasserfall`, `ruine`, `ereignis`
+- Dual-Biotope für fließende Übergänge
+- Druck: A4/A3/Letter, Hex 30–60 mm flat-to-flat, dichte Packung, Ersatz-Füllung
+
+## Neu backen (lokal)
 ```bash
-cd ~/Projects/hexagon-al-spiel && python3 -m http.server 8788 --bind 127.0.0.1
-open http://127.0.0.1:8788/
+cd ~/Projects/hexagon-al-spiel
+python3 bake_tiles.py
 ```
 
-## Dateien
-| Datei | Rolle |
-|-------|--------|
-| `index.html` | Einstieg |
-| `SPIEL.html` | Digital spielen |
-| `DRUCK.html` | Ausdrucken / PDF · A4–A3 · Hex 30–60 mm |
-| `paint-engine.js` | Malerei + Nesting-Packer |
-
-## Welten
-Alpenfrühling · Nordmoor · Herbstgold · Flusstal · Hochsommer · Dämmerung
-
-## Druck
-- Flat-to-Flat = Brettspiel-Standardmaß
-- Empfohlen: **40 mm auf A4**
-- Browser: Drucken → PDF · Maßstab **100%**
-
-## Nicht
-Expo · N/V/A-Kacheln · festes Bewegungspfad-Brett
+## Hinweis Bild-APIs
+Nano Banana / Gemini Image-Quota war beim Build **erschöpft** (429). Aktuelle Optik = Offline-Landschaftsbäcker (Pillow/Numpy). Bei Key/Quota: Textur-Pass möglich.
 
 proposed · nicht Kanon

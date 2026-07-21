@@ -3,69 +3,47 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>HEXAGON-AL · Druckbögen</title>
+<title>HEXAGON-AL · Druckbögen Landschaft</title>
 <style>
-:root{
-  --bg:#1a2332; --panel:#243044; --line:#3d4f6a; --text:#eef3f8; --muted:#9fb0c6; --hit:#f0a35e;
-}
+:root{--bg:#1a2332;--panel:#243044;--line:#3d4f6a;--text:#eef3f8;--muted:#9fb0c6;--hit:#f0a35e}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
-body{min-height:100%}
-header{
-  position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:10px;align-items:center;
-  padding:12px 16px;background:rgba(12,18,28,.96);border-bottom:1px solid var(--line)
-}
+header{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 16px;background:rgba(12,18,28,.96);border-bottom:1px solid var(--line)}
 .brand{font-weight:900;letter-spacing:.08em}
 .pill{padding:6px 10px;border-radius:999px;background:#121a26;border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--muted)}
 .pill strong{color:var(--text)}
 .spacer{flex:1}
 label{font-size:12px;font-weight:800;color:var(--muted);display:flex;flex-direction:column;gap:4px}
-select,input[type=number]{
-  padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:#121a26;color:var(--text);font-weight:700;min-width:110px
-}
-.btn{
-  padding:10px 14px;border-radius:12px;font-weight:800;border:1px solid var(--line);
-  background:#2a3a52;color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center
-}
+select,input[type=number]{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:#121a26;color:var(--text);font-weight:700;min-width:110px}
+.btn{padding:10px 14px;border-radius:12px;font-weight:800;border:1px solid var(--line);background:#2a3a52;color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
 .btn.primary{background:linear-gradient(180deg,#f0b27a,#e67e22);color:#1a1208;border-color:transparent}
 .btn.ghost{background:transparent;color:var(--muted)}
 main{padding:18px 16px 80px;max-width:1100px;margin:0 auto}
-.panel{
-  background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:16px;line-height:1.5
-}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:16px;line-height:1.5}
 .panel h1{margin:0 0 8px;font-size:1.35rem}
 .panel p{margin:0 0 8px;color:var(--muted)}
 .kicker{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--hit);margin-bottom:6px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
 .stat{background:#121a26;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-.stat b{display:block;font-size:1.15rem;color:var(--text)}
+.stat b{display:block;font-size:1.15rem}
 .stat span{font-size:12px;color:var(--muted);font-weight:700}
 .hint{font-size:13px;color:var(--muted)}
 table.sizes{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
 table.sizes th,table.sizes td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left}
-table.sizes th{color:var(--muted);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
-
-/* screen preview of pages */
 #pages{display:flex;flex-direction:column;gap:18px;align-items:center}
-.page-wrap{background:#0e141c;border:1px solid var(--line);border-radius:8px;padding:10px;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.page-wrap{background:#0e141c;border:1px solid var(--line);border-radius:8px;padding:10px}
 .page-wrap .meta{font-size:12px;color:var(--muted);font-weight:700;margin:0 0 8px;display:flex;justify-content:space-between;gap:8px}
-canvas.page{
-  display:block;background:#fff;width:min(100%, 420px);height:auto;
-  box-shadow:0 0 0 1px rgba(0,0,0,.08)
-}
-
+canvas.page{display:block;background:#fff;width:min(100%,420px);height:auto}
+#loading{padding:40px;text-align:center;font-weight:800}
 @media print{
   body{background:#fff;color:#000}
-  header, .no-print{display:none!important}
-  main{padding:0;max-width:none;margin:0}
+  header,.no-print{display:none!important}
+  main{padding:0;max-width:none}
   #pages{gap:0}
-  .page-wrap{background:none;border:0;border-radius:0;padding:0;box-shadow:none;break-after:page;page-break-after:always}
-  .page-wrap:last-child{break-after:auto;page-break-after:auto}
+  .page-wrap{background:none;border:0;padding:0;box-shadow:none;break-after:page;page-break-after:always}
+  .page-wrap:last-child{break-after:auto}
   .page-wrap .meta{display:none}
-  canvas.page{
-    width:100%!important;height:auto!important;
-    box-shadow:none
-  }
+  canvas.page{width:100%!important;height:auto!important}
   @page{margin:0}
 }
 </style>
@@ -73,248 +51,255 @@ canvas.page{
 <body>
 <header class="no-print">
   <div class="brand">HEXAGON-AL</div>
-  <span class="pill">Druckbögen</span>
+  <span class="pill">Druck · Landschaft</span>
   <span class="pill" id="pack-pill">—</span>
   <div class="spacer"></div>
   <a class="btn ghost" href="SPIEL.html">← Spiel</a>
   <button class="btn primary" id="btn-print">Drucken / PDF</button>
 </header>
-
 <main>
   <section class="panel no-print">
-    <div class="kicker">Skalierbar · platzsparend · wenig Verschnitt</div>
-    <h1>Habitat-Hexes zum Ausschneiden</h1>
-    <p>Dieselbe Malerei-Engine wie im Spiel. Welten bleiben stilistisch zusammen. Hexes werden <strong>dicht genestet</strong> (Pointy-Top-Reihen, minimaler Spalt), damit möglichst wenig Papiermüll entsteht.</p>
+    <div class="kicker">Ausschneiden · drehen · Landschaft legen</div>
+    <h1>Gemalte Landschafts-Hexes</h1>
+    <p>64 Kacheln: Biotope + <strong>Pfad, Abzweig, Brücke, Sturzbrücke, Höhle, Wasserfall, Ruine, Ereignis</strong>. Dicht genestet, Maßstab 1:1.</p>
     <div class="grid" style="align-items:end">
-      <label>Welt
-        <select id="world"></select>
-      </label>
       <label>Papier
         <select id="paper">
           <option value="A4" selected>A4 (210×297 mm)</option>
           <option value="A3">A3 (297×420 mm)</option>
           <option value="Letter">US Letter</option>
-          <option value="A5">A5 (148×210 mm)</option>
+          <option value="A5">A5</option>
         </select>
       </label>
-      <label>Hex-Größe (Flat-to-Flat)
+      <label>Hex flat-to-flat
         <select id="hexmm">
-          <option value="30">30 mm — mini / travel</option>
-          <option value="35">35 mm — kompakt</option>
-          <option value="40" selected>40 mm — Standard sparsam</option>
-          <option value="45">45 mm — gut greifbar</option>
-          <option value="50">50 mm — Tisch-premium</option>
-          <option value="60">60 mm — groß / Demo</option>
+          <option value="30">30 mm</option>
+          <option value="35">35 mm</option>
+          <option value="40" selected>40 mm sparsam</option>
+          <option value="45">45 mm</option>
+          <option value="50">50 mm greifbar</option>
+          <option value="60">60 mm Demo</option>
         </select>
       </label>
-      <label>Rand (mm)
-        <input type="number" id="margin" value="6" min="4" max="15" step="0.5"/>
-      </label>
-      <label>Spalt (mm)
-        <input type="number" id="gap" value="1.2" min="0.4" max="4" step="0.1"/>
-      </label>
+      <label>Rand mm<input type="number" id="margin" value="6" min="4" max="15" step="0.5"/></label>
+      <label>Spalt mm<input type="number" id="gap" value="1.2" min="0.4" max="4" step="0.1"/></label>
       <label>Set
         <select id="set">
-          <option value="full" selected>Vollset (Mono+Dual)</option>
-          <option value="mono">Nur Mono-Biotope</option>
-          <option value="dual">Nur Dual-Kacheln</option>
+          <option value="full" selected>Vollset</option>
+          <option value="features">Nur Merkmal/Landmarken</option>
+          <option value="base">Nur Basis-Biotope</option>
         </select>
       </label>
       <button class="btn primary" id="btn-render">Bögen erzeugen</button>
     </div>
-
     <div class="grid" style="margin-top:14px">
       <div class="stat"><b id="s-pages">—</b><span>Seiten</span></div>
       <div class="stat"><b id="s-per">—</b><span>Hexes / Seite</span></div>
-      <div class="stat"><b id="s-tiles">—</b><span>Kacheln gesamt</span></div>
-      <div class="stat"><b id="s-waste">—</b><span>geschätzter Papier-Leerraum*</span></div>
+      <div class="stat"><b id="s-tiles">—</b><span>Kacheln</span></div>
+      <div class="stat"><b id="s-waste">—</b><span>Leerraum-Schätzung</span></div>
     </div>
-    <p class="hint">*Leerraum = Seite minus Hex-Flächen (Ränder + Lücken). Dichte Packung optimiert die nutzbare Fläche; ausgeschnittene Hex-Zwischenräume sind geometrisch unvermeidbar, aber Zeilen greifen ineinander.</p>
-
+    <p class="hint">Drucken: Maßstab <strong>100% / tatsächliche Größe</strong>. Unten 20-mm-Maßstab. Schnitt am Hex-Rand.</p>
     <table class="sizes">
-      <thead><tr><th>Flat-to-Flat</th><th>Empfehlung</th><th>A4 ca. Hexes*</th><th>A3 ca. Hexes*</th></tr></thead>
+      <thead><tr><th>mm</th><th>A4</th><th>A3</th><th>Empfehlung</th></tr></thead>
       <tbody id="size-table"></tbody>
     </table>
-    <p class="hint">*Richtwerte bei 6 mm Rand / 1.2 mm Spalt — exakt nach „Bögen erzeugen“.</p>
   </section>
-
+  <div id="loading">Kacheln laden…</div>
   <div id="pages"></div>
 </main>
-
-<script src="paint-engine.js"></script>
 <script>
 (() => {
-  'use strict';
-  const P = window.HexPaint;
-  const worldSel = document.getElementById('world');
-  Object.values(P.WORLDS).forEach(w=>{
-    const o=document.createElement('option'); o.value=w.id; o.textContent=w.name; worldSel.appendChild(o);
-  });
-  const params = new URLSearchParams(location.search);
-  if(params.get('world') && P.WORLDS[params.get('world')]) worldSel.value = params.get('world');
+  const PAPER = {
+    A4:{w:210,h:297,label:'A4'},
+    A3:{w:297,h:420,label:'A3'},
+    Letter:{w:215.9,h:279.4,label:'US Letter'},
+    A5:{w:148,h:210,label:'A5'},
+  };
+  function hexMetrics(flatToFlatMm){
+    const size = flatToFlatMm / Math.sqrt(3);
+    const width = flatToFlatMm;
+    const height = 2 * size;
+    return {size, width, height, row: 1.5*size, oddOffset: width/2};
+  }
+  function packHexes(paperKey, flatToFlatMm, margin=6, gap=1.2, headerMm=12){
+    const paper = PAPER[paperKey];
+    const m = hexMetrics(flatToFlatMm);
+    const cellW = m.width + gap;
+    const cellH = m.row + gap*0.75;
+    const usableW = paper.w - margin*2;
+    let colsEven = Math.max(1, Math.floor((usableW - m.width)/cellW)+1);
+    let colsOdd = Math.max(0, Math.floor((usableW - m.width - m.oddOffset)/cellW)+1);
+    const positions=[];
+    let row=0;
+    while(true){
+      const odd = row%2===1;
+      const cols = odd ? colsOdd : colsEven;
+      if(cols<=0) break;
+      const y = margin + headerMm + m.height/2 + row*cellH;
+      if(y + m.height/2 > paper.h - margin) break;
+      for(let c=0;c<cols;c++){
+        const x = margin + (odd?m.oddOffset:0) + m.width/2 + c*cellW;
+        if(x + m.width/2 > paper.w - margin) continue;
+        positions.push({x,y});
+      }
+      row++;
+      if(row>80) break;
+    }
+    const hexArea = (3*Math.sqrt(3)/2)*m.size*m.size;
+    const wastePct = Math.max(0, 100*(1 - positions.length*hexArea/(paper.w*paper.h)));
+    return {paper, metrics:m, positions, countPerPage:positions.length, wastePct, margin, gap};
+  }
 
-  // size guide table
-  const tbody = document.getElementById('size-table');
+  const tbody=document.getElementById('size-table');
   [30,35,40,45,50,60].forEach(mm=>{
-    const a4 = P.packHexes('A4', mm).countPerPage;
-    const a3 = P.packHexes('A3', mm).countPerPage;
-    const rec = mm===40 ? 'Kosteneffizient Standard' : mm===50 ? 'Premium greifbar' : mm<=35 ? 'Viele pro Blatt' : mm>=60 ? 'Demo/Unterricht' : '—';
+    const a4=packHexes('A4',mm).countPerPage;
+    const a3=packHexes('A3',mm).countPerPage;
+    const rec=mm===40?'Kosteneffizient':mm===50?'Premium':mm<=35?'Viele/Blatt':mm>=60?'Demo':'—';
     const tr=document.createElement('tr');
-    tr.innerHTML = `<td><strong>${mm} mm</strong></td><td>${rec}</td><td>${a4}</td><td>${a3}</td>`;
+    tr.innerHTML=`<td><strong>${mm}</strong></td><td>${a4}</td><td>${a3}</td><td>${rec}</td>`;
     tbody.appendChild(tr);
   });
 
-  function mmToCssPx(mm, paperWmm, cssWidthPx){
-    return (mm / paperWmm) * cssWidthPx;
+  let catalog=[], images=new Map();
+
+  async function load(){
+    const man = await (await fetch('assets/manifest.json')).json();
+    catalog = man;
+    await Promise.all(man.map(t => new Promise((res,rej)=>{
+      const img=new Image();
+      img.onload=()=>{images.set(t.id,img); res();};
+      img.onerror=()=>rej(new Error(t.file));
+      img.src=t.file;
+    })));
+    document.getElementById('loading').remove();
+    render();
   }
 
-  function buildTileList(worldId, setMode){
-    let tiles = P.catalogTiles(worldId);
-    if(setMode==='mono') tiles = tiles.filter(t=>t.kind==='mono');
-    if(setMode==='dual') tiles = tiles.filter(t=>t.kind==='dual');
-    return tiles;
+  function filterTiles(mode){
+    if(mode==='features') return catalog.filter(t=>(t.features||[]).length>0);
+    if(mode==='base') return catalog.filter(t=>(t.features||[]).length===0);
+    return catalog.slice();
   }
 
   function render(){
-    const worldId = worldSel.value;
-    const paperKey = document.getElementById('paper').value;
-    const hexmm = +document.getElementById('hexmm').value;
-    const margin = +document.getElementById('margin').value;
-    const gap = +document.getElementById('gap').value;
-    const setMode = document.getElementById('set').value;
-    const world = P.WORLDS[worldId];
-    const tilesBase = buildTileList(worldId, setMode);
-    // Fill last page with reserve monoes so almost-empty sheets don't waste paper
-    let tiles = tilesBase.slice();
-    const pack = P.packHexes(paperKey, hexmm, { marginMm: margin, gapMm: gap, headerMm: 12 });
-    const per = Math.max(1, pack.countPerPage);
-    if (tiles.length % per !== 0) {
-      const need = per - (tiles.length % per);
-      let ri = 0;
-      while (tiles.length % per !== 0 && ri < need + 20) {
-        const h = P.HLIST[ri % P.HLIST.length];
-        const t = P.makeMono(h);
-        t.uid = 9000 + ri;
-        t.seed = P.hashStr(worldId + ':spare:' + ri);
-        t.spare = true;
-        tiles.push(t);
-        ri++;
+    const paperKey=document.getElementById('paper').value;
+    const hexmm=+document.getElementById('hexmm').value;
+    const margin=+document.getElementById('margin').value;
+    const gap=+document.getElementById('gap').value;
+    const mode=document.getElementById('set').value;
+    let tiles=filterTiles(mode);
+    const pack=packHexes(paperKey, hexmm, margin, gap, 12);
+    const per=Math.max(1, pack.countPerPage);
+    // fill last page with repeats as Ersatz
+    const tilesBase=tiles.slice();
+    if(tiles.length % per !== 0){
+      let i=0;
+      while(tiles.length % per !== 0){
+        const t={...tilesBase[i % tilesBase.length], spare:true, id: tilesBase[i % tilesBase.length].id};
+        tiles.push(t); i++;
       }
     }
-    const pagesN = Math.max(1, Math.ceil(tiles.length / Math.max(1, per)));
+    const pagesN=Math.ceil(tiles.length/per);
+    document.getElementById('s-pages').textContent=String(pagesN);
+    document.getElementById('s-per').textContent=String(per);
+    document.getElementById('s-tiles').textContent=String(tilesBase.length)+(tiles.length>tilesBase.length?` +${tiles.length-tilesBase.length} E`:'');
+    document.getElementById('s-waste').textContent=pack.wastePct.toFixed(0)+'%';
+    document.getElementById('pack-pill').innerHTML=`${pack.paper.label} · <strong>${hexmm} mm</strong> · ${per}/Seite`;
 
-    document.getElementById('s-pages').textContent = String(pagesN);
-    document.getElementById('s-per').textContent = String(per);
-    document.getElementById('s-tiles').textContent = String(tilesBase.length) + (tiles.length > tilesBase.length ? ` +${tiles.length - tilesBase.length} Ersatz` : '');
-    document.getElementById('s-waste').textContent = pack.wastePct.toFixed(0)+'%';
-    document.getElementById('pack-pill').innerHTML = `${pack.paper.label} · <strong>${hexmm} mm</strong> · ${per}/Seite · ~${pack.wastePct.toFixed(0)}% Leer`;
-
-    const root = document.getElementById('pages');
-    root.innerHTML = '';
-
-    // High-res canvas: 12 px per mm ≈ 300dpi-ish for A4 preview/print
-    const PX_PER_MM = 12;
-    const pw = pack.paper.w * PX_PER_MM;
-    const ph = pack.paper.h * PX_PER_MM;
+    const root=document.getElementById('pages');
+    root.innerHTML='';
+    const PPM=12;
+    const pw=pack.paper.w*PPM, ph=pack.paper.h*PPM;
 
     for(let pi=0; pi<pagesN; pi++){
       const wrap=document.createElement('div');
       wrap.className='page-wrap';
       const meta=document.createElement('div');
       meta.className='meta';
-      meta.innerHTML = `<span>Seite ${pi+1}/${pagesN} · ${world.name}</span><span>${pack.paper.label} · Hex ${hexmm} mm flat-to-flat</span>`;
+      meta.innerHTML=`<span>Seite ${pi+1}/${pagesN}</span><span>${pack.paper.label} · ${hexmm} mm flat-to-flat</span>`;
       const canvas=document.createElement('canvas');
       canvas.className='page';
-      canvas.width = Math.round(pw);
-      canvas.height = Math.round(ph);
-      canvas.style.width = 'min(100%, 420px)';
-      canvas.style.aspectRatio = `${pack.paper.w} / ${pack.paper.h}`;
+      canvas.width=Math.round(pw); canvas.height=Math.round(ph);
+      canvas.style.aspectRatio=`${pack.paper.w}/${pack.paper.h}`;
+      const ctx=canvas.getContext('2d');
+      ctx.fillStyle='#fbf8f2'; ctx.fillRect(0,0,canvas.width,canvas.height);
+      // header
+      ctx.fillStyle='#e8eef2'; ctx.fillRect(0,0,canvas.width,11*PPM);
+      ctx.fillStyle='#222';
+      ctx.font=`700 ${Math.round(3.1*PPM)}px system-ui`;
+      ctx.textAlign='left';
+      ctx.fillText('HEXAGON-AL · gemalte Landschaft', 6*PPM, 5*PPM);
+      ctx.font=`600 ${Math.round(2.3*PPM)}px system-ui`;
+      ctx.fillStyle='#555';
+      ctx.fillText(`${pack.paper.label} · Hex ${hexmm} mm flat-to-flat · Seite ${pi+1}/${pagesN} · Schnitt am Rand · Spalt ${gap} mm · E=Ersatz`, 6*PPM, 8.5*PPM);
 
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#fbf8f2';
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-
-      ctx.fillStyle = world.paper;
-      ctx.fillRect(0,0,canvas.width, 11*PX_PER_MM);
-      ctx.fillStyle = world.ink;
-      ctx.font = `700 ${Math.round(3.2*PX_PER_MM)}px "Avenir Next", system-ui, sans-serif`;
-      ctx.textAlign = 'left';
-      ctx.fillText(`HEXAGON-AL · ${world.name}`, 6*PX_PER_MM, 5.2*PX_PER_MM);
-      ctx.font = `600 ${Math.round(2.4*PX_PER_MM)}px system-ui, sans-serif`;
-      ctx.fillStyle = '#555';
-      ctx.fillText(`${pack.paper.label}  ·  Hex ${hexmm} mm flat-to-flat  ·  Seite ${pi+1}/${pagesN}  ·  Schnitt an Hex-Rand  ·  Spalt ${gap} mm  ·  leere Slots = Ersatz`, 6*PX_PER_MM, 8.6*PX_PER_MM);
-
-      const barMm = 20;
-      const barX = 6*PX_PER_MM;
-      const barY = canvas.height - 5*PX_PER_MM;
-      ctx.strokeStyle = '#222';
-      ctx.lineWidth = 1.5;
+      // scale bar
+      const barY=canvas.height-5*PPM, barX=6*PPM;
+      ctx.strokeStyle='#222'; ctx.lineWidth=1.5;
       ctx.beginPath();
-      ctx.moveTo(barX, barY);
-      ctx.lineTo(barX + barMm*PX_PER_MM, barY);
-      ctx.moveTo(barX, barY-3); ctx.lineTo(barX, barY+3);
-      ctx.moveTo(barX + barMm*PX_PER_MM, barY-3); ctx.lineTo(barX + barMm*PX_PER_MM, barY+3);
+      ctx.moveTo(barX,barY); ctx.lineTo(barX+20*PPM,barY);
+      ctx.moveTo(barX,barY-3); ctx.lineTo(barX,barY+3);
+      ctx.moveTo(barX+20*PPM,barY-3); ctx.lineTo(barX+20*PPM,barY+3);
       ctx.stroke();
-      ctx.font = `600 ${Math.round(2.2*PX_PER_MM)}px system-ui`;
-      ctx.fillStyle = '#333';
-      ctx.textAlign = 'left';
-      ctx.fillText('20 mm', barX, barY - 5);
-      ctx.textAlign = 'right';
-      ctx.fillText(`Druckmaß 1:1 · ${pack.paper.w}×${pack.paper.h} mm`, canvas.width - 6*PX_PER_MM, barY);
+      ctx.font=`600 ${Math.round(2.2*PPM)}px system-ui`;
+      ctx.fillStyle='#333'; ctx.textAlign='left';
+      ctx.fillText('20 mm', barX, barY-5);
+      ctx.textAlign='right';
+      ctx.fillText(`1:1 · ${pack.paper.w}×${pack.paper.h} mm`, canvas.width-6*PPM, barY);
 
-      const sizePx = pack.metrics.size * PX_PER_MM;
-      const slice = tiles.slice(pi*per, pi*per + per);
-      slice.forEach((tile, i)=>{
-        const pos = pack.positions[i];
-        if(!pos) return;
-        const cx = pos.x * PX_PER_MM;
-        const cy = pos.y * PX_PER_MM;
-        P.paintTile(ctx, tile, cx, cy, sizePx, {
-          world: worldId,
-          print: true,
-          edgeRings: true,
-        });
-        if (tile.spare) {
-          ctx.save();
-          ctx.fillStyle = 'rgba(255,255,255,.72)';
-          ctx.beginPath();
-          ctx.arc(cx + sizePx * 0.55, cy - sizePx * 0.55, sizePx * 0.12, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#444';
-          ctx.font = `700 ${Math.round(sizePx * 0.11)}px system-ui`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('E', cx + sizePx * 0.55, cy - sizePx * 0.55);
-          ctx.restore();
+      const sizePx=pack.metrics.size*PPM;
+      const slice=tiles.slice(pi*per, pi*per+per);
+      slice.forEach((tile,i)=>{
+        const pos=pack.positions[i]; if(!pos) return;
+        const cx=pos.x*PPM, cy=pos.y*PPM;
+        const img=images.get(tile.id);
+        ctx.save();
+        // hex clip
+        ctx.beginPath();
+        for(let k=0;k<6;k++){
+          const a=-Math.PI/2+k*Math.PI/3;
+          const x=cx+sizePx*Math.cos(a), y=cy+sizePx*Math.sin(a);
+          k?ctx.lineTo(x,y):ctx.moveTo(x,y);
+        }
+        ctx.closePath(); ctx.clip();
+        if(img) ctx.drawImage(img, cx-sizePx, cy-sizePx, sizePx*2, sizePx*2);
+        ctx.restore();
+        // outline
+        ctx.beginPath();
+        for(let k=0;k<6;k++){
+          const a=-Math.PI/2+k*Math.PI/3;
+          const x=cx+sizePx*Math.cos(a), y=cy+sizePx*Math.sin(a);
+          k?ctx.lineTo(x,y):ctx.moveTo(x,y);
+        }
+        ctx.closePath();
+        ctx.strokeStyle='rgba(30,24,20,.8)'; ctx.lineWidth=Math.max(1,sizePx*0.02); ctx.stroke();
+        // cut guide
+        ctx.beginPath();
+        for(let k=0;k<6;k++){
+          const a=-Math.PI/2+k*Math.PI/3;
+          const r=sizePx+Math.max(1,sizePx*0.02);
+          const x=cx+r*Math.cos(a), y=cy+r*Math.sin(a);
+          k?ctx.lineTo(x,y):ctx.moveTo(x,y);
+        }
+        ctx.closePath();
+        ctx.setLineDash([3,3]); ctx.strokeStyle='rgba(80,70,60,.35)'; ctx.lineWidth=0.6; ctx.stroke(); ctx.setLineDash([]);
+        if(tile.spare){
+          ctx.fillStyle='rgba(255,255,255,.75)';
+          ctx.beginPath(); ctx.arc(cx+sizePx*0.55, cy-sizePx*0.55, sizePx*0.12, 0, Math.PI*2); ctx.fill();
+          ctx.fillStyle='#333'; ctx.font=`700 ${Math.round(sizePx*0.12)}px system-ui`;
+          ctx.textAlign='center'; ctx.textBaseline='middle';
+          ctx.fillText('E', cx+sizePx*0.55, cy-sizePx*0.55);
         }
       });
 
-      ctx.strokeStyle = '#888';
-      ctx.lineWidth = 1;
-      const m = margin * PX_PER_MM;
-      [[m,m],[canvas.width-m,m],[m,canvas.height-m],[canvas.width-m,canvas.height-m]].forEach(([x,y])=>{
-        const s=8;
-        ctx.beginPath();
-        ctx.moveTo(x-s,y); ctx.lineTo(x+s,y);
-        ctx.moveTo(x,y-s); ctx.lineTo(x,y+s);
-        ctx.stroke();
-      });
-
-      wrap.appendChild(meta);
-      wrap.appendChild(canvas);
-      root.appendChild(wrap);
+      wrap.appendChild(meta); wrap.appendChild(canvas); root.appendChild(wrap);
     }
   }
 
-  document.getElementById('btn-render').onclick = render;
-  document.getElementById('btn-print').onclick = ()=>{
-    if(!document.querySelector('canvas.page')) render();
-    setTimeout(()=>window.print(), 100);
-  };
-  ['world','paper','hexmm','margin','gap','set'].forEach(id=>{
-    document.getElementById(id).addEventListener('change', render);
-  });
-  render();
+  document.getElementById('btn-render').onclick=render;
+  document.getElementById('btn-print').onclick=()=>{ if(!document.querySelector('canvas.page')) render(); setTimeout(()=>window.print(),80); };
+  ['paper','hexmm','margin','gap','set'].forEach(id=>document.getElementById(id).addEventListener('change', render));
+  load().catch(e=>{ document.getElementById('loading').textContent='Fehler: '+e.message; });
 })();
 </script>
 </body>

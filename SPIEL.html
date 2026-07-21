@@ -6,62 +6,39 @@
 <meta name="theme-color" content="#1a2332"/>
 <title>HEXAGON-AL · Landschaft legen</title>
 <style>
-:root{
-  --bg:#1a2332; --panel:#243044; --line:#3d4f6a; --text:#eef3f8; --muted:#9fb0c6;
-  --hit:#f0a35e; --ok:#7dcea0; --paper:#f4efe4;
-}
+:root{--bg:#1a2332;--line:#3d4f6a;--text:#eef3f8;--muted:#9fb0c6;--hit:#f0a35e}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--text);
-  font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 #app{display:grid;grid-template-rows:auto 1fr auto;height:100%}
-header{
-  display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 14px;
-  background:rgba(12,18,28,.92);border-bottom:1px solid var(--line);z-index:5
-}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 14px;background:rgba(12,18,28,.94);border-bottom:1px solid var(--line);z-index:5}
 .brand{font-weight:900;letter-spacing:.08em}
 .pill{padding:6px 10px;border-radius:999px;background:#121a26;border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--muted)}
 .pill strong{color:var(--text)}
 .spacer{flex:1}
-.btn{
-  padding:10px 14px;border-radius:12px;font-weight:800;border:1px solid var(--line);
-  background:#2a3a52;min-height:42px
-}
+.btn{padding:10px 14px;border-radius:12px;font-weight:800;border:1px solid var(--line);background:#2a3a52;min-height:42px;color:var(--text);text-decoration:none;display:inline-flex;align-items:center}
 .btn.primary{background:linear-gradient(180deg,#f0b27a,#e67e22);color:#1a1208;border-color:transparent}
-.btn:disabled{opacity:.4;cursor:not-allowed}
 .btn.ghost{background:transparent;color:var(--muted)}
-select.world{
-  padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:#121a26;color:var(--text);
-  font-weight:700;min-height:42px
-}
-#table-wrap{position:relative;overflow:hidden;background:
-  radial-gradient(ellipse at 50% 40%,rgba(125,180,220,.08),transparent 55%),
-  linear-gradient(180deg,#1e2a3c,#152030)}
+.btn:disabled{opacity:.4}
+#table-wrap{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,rgba(125,180,220,.08),transparent 55%),linear-gradient(180deg,#1e2a3c,#152030)}
 #table{position:absolute;left:0;top:0;transform-origin:0 0;width:4000px;height:4000px}
 #table canvas.layer{position:absolute;left:0;top:0}
-#ghost{position:absolute;pointer-events:none;opacity:.9;z-index:4}
-#hints{position:absolute;inset:0;pointer-events:none;z-index:3}
-footer{
-  display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 12px;
-  background:rgba(12,18,28,.95);border-top:1px solid var(--line)
-}
+#ghost{position:absolute;pointer-events:none;opacity:.92;z-index:4}
+footer{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 12px;background:rgba(12,18,28,.95);border-top:1px solid var(--line)}
 @media(max-width:800px){footer{grid-template-columns:1fr}}
-.market{display:flex;gap:10px;align-items:center;overflow-x:auto;padding-bottom:4px}
-.market-label{font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);min-width:64px}
-.slot{
-  position:relative;width:100px;height:110px;flex:0 0 auto;border-radius:14px;
-  background:#121a26;border:2px solid var(--line);display:grid;place-items:center;
-  transition:border-color .15s, transform .15s
-}
+.market{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+.market-label{font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);min-width:70px}
+.slot{position:relative;width:104px;height:114px;flex:0 0 auto;border-radius:14px;background:#121a26;border:2px solid var(--line);display:grid;place-items:center}
 .slot.sel{border-color:var(--hit);box-shadow:0 0 0 3px rgba(240,163,94,.25);transform:translateY(-3px)}
-.slot canvas{width:86px;height:96px;pointer-events:none}
+.slot canvas{width:90px;height:100px;pointer-events:none}
 .slot .idx{position:absolute;top:4px;left:6px;font-size:10px;font-weight:900;color:var(--muted)}
+.slot .tag{position:absolute;bottom:4px;left:4px;right:4px;font-size:9px;font-weight:800;color:#dfe8f4;text-align:center;text-shadow:0 1px 2px #000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end}
 .help{font-size:12px;color:var(--muted);max-width:280px;line-height:1.35}
-.modal-bg{position:fixed;inset:0;background:rgba(8,12,20,.78);display:none;align-items:center;justify-content:center;z-index:40;padding:16px}
+.modal-bg{position:fixed;inset:0;background:rgba(8,12,20,.8);display:none;align-items:center;justify-content:center;z-index:40;padding:16px}
 .modal-bg.on{display:flex}
-.modal{width:min(560px,100%);background:#243044;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
-.modal h1{margin:0 0 8px;font-size:1.6rem}
+.modal{width:min(560px,100%);background:#243044;border:1px solid var(--line);border-radius:20px;padding:22px}
+.modal h1{margin:0 0 8px;font-size:1.5rem}
 .modal p{margin:0 0 12px;color:var(--muted);line-height:1.5}
 .modal .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .kicker{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--hit);margin-bottom:8px}
@@ -69,24 +46,24 @@ footer{
 #toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:#121a26;border:1px solid var(--line);padding:10px 16px;border-radius:12px;font-weight:800;opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
 #toast.on{opacity:1}
 a.link{color:#8ec5ff;font-weight:800}
+#loading{position:fixed;inset:0;display:grid;place-items:center;background:#1a2332;z-index:50;font-weight:800}
 </style>
 </head>
 <body>
-<div id="app">
+<div id="loading">Landschaftskacheln laden…</div>
+<div id="app" hidden>
   <header>
     <div class="brand">HEXAGON-AL</div>
-    <span class="pill">Landschaft legen</span>
-    <span class="pill">Zug <strong id="turn">1</strong>/<span id="maxturn">18</span></span>
+    <span class="pill">Landschaft</span>
+    <span class="pill">Zug <strong id="turn">1</strong>/<span id="maxturn">16</span></span>
     <span class="pill">Punkte <strong id="score">0</strong></span>
-    <select class="world" id="world" title="Welt-Stil"></select>
     <div class="spacer"></div>
-    <a class="btn ghost" href="DRUCK.html" target="_blank" rel="noopener">Druckbögen</a>
-    <button class="btn" id="btn-rot" title="R">Drehen 60°</button>
+    <a class="btn ghost" href="DRUCK.html">Druckbögen</a>
+    <button class="btn" id="btn-rot">Drehen 60°</button>
     <button class="btn" id="btn-score">Wertung</button>
     <button class="btn ghost" id="btn-help">?</button>
     <button class="btn ghost" id="btn-new">Neu</button>
   </header>
-
   <div id="table-wrap">
     <div id="table">
       <canvas id="land" class="layer"></canvas>
@@ -94,402 +71,439 @@ a.link{color:#8ec5ff;font-weight:800}
       <canvas id="ghost"></canvas>
     </div>
   </div>
-
   <footer>
     <div>
-      <div class="market-label">Markt · R drehen · gelbes Feld</div>
+      <div class="market-label">Markt · R drehen · anlegen</div>
       <div class="market" id="market"></div>
     </div>
     <div class="controls">
-      <div class="help" id="status">Wähle eine bemalte Hex-Kachel. Drehe sie, bis Flüsse und Wälder anschließen.</div>
+      <div class="help" id="status">Lade…</div>
       <button class="btn" id="btn-zoomout">−</button>
       <button class="btn" id="btn-zoomin">+</button>
-      <button class="btn primary" id="btn-end" disabled>Runde werten / Ende</button>
+      <button class="btn primary" id="btn-end" disabled>Werten</button>
     </div>
   </footer>
 </div>
-
 <div id="toast"></div>
-<div class="modal-bg on" id="boot">
+<div class="modal-bg" id="boot">
   <div class="modal">
-    <div class="kicker">Cascadia-Richtung · bemalte Welten · Druck</div>
+    <div class="kicker">Gemalte Landschafts-Hexes · drehen · anlegen</div>
     <h1>HEXAGON-AL</h1>
-    <p><strong>Bemalte Habitat-Hexes</strong> — drehen, anlegen, Landschaft wachsen lassen. Sechs zueinander passende <em>Welten</em> (Paletten + Malstil). Kacheln oft mit <strong>zwei Biotopen</strong>.</p>
-    <p>Ziel: große zusammenhängende Biotop-Flächen. Zum Ausschneiden: <a class="link" href="DRUCK.html" target="_blank">Druckbögen</a> (A4/A3, platzsparend genestet).</p>
+    <p>Du legst <strong>bemalte Landschaftskacheln</strong>: Wald, Berg, Wiese, Moor, Fluss — dazu <strong>Pfade, Abzweige, Brücken, Sturzbrücken, Höhlen, Wasserfälle, Ruinen, Ereignisse</strong>.</p>
+    <p>Drehen in 60°-Schritten. Gleiche Biotope an der Naht und anschließende Flüsse/Wege ergeben das Bild einer echten Landschaft.</p>
     <div class="row">
       <button class="btn primary" id="btn-start">Landschaft beginnen</button>
-      <button class="btn" id="btn-rules">Kurzregeln</button>
+      <a class="btn" href="DRUCK.html">Ausschneiden drucken</a>
     </div>
   </div>
 </div>
 <div class="modal-bg" id="modal-bg"><div class="modal" id="modal"></div></div>
-
-<script src="paint-engine.js"></script>
 <script>
 (() => {
   'use strict';
-  const P = window.HexPaint;
-  const SIZE = 58;
+  const SIZE = 64;
   const DIRS = [[+1,0],[0,-1],[-1,-1],[-1,0],[0,+1],[+1,+1]];
-  const key = (q,r) => q+','+r;
+  const key = (q,r)=>q+','+r;
+  const ORIGIN = {x:2000,y:2000};
+  const BIOME_SCORE = ['berg','wald','wiese','moor','fluss'];
+
   function axialToPixel(q,r){
-    return { x: SIZE * Math.sqrt(3) * (q + r/2), y: SIZE * 3/2 * r };
-  }
-  function pixelToAxial(x,y){
-    const q = (Math.sqrt(3)/3 * x - 1/3 * y) / SIZE;
-    const r = (2/3 * y) / SIZE;
-    return axialRound(q,r);
+    return {x: SIZE*Math.sqrt(3)*(q+r/2), y: SIZE*1.5*r};
   }
   function axialRound(q,r){
-    let x=q, z=r, y=-x-z;
-    let rx=Math.round(x), ry=Math.round(y), rz=Math.round(z);
-    const x_diff=Math.abs(rx-x), y_diff=Math.abs(ry-y), z_diff=Math.abs(rz-z);
-    if(x_diff>y_diff && x_diff>z_diff) rx=-ry-rz;
-    else if(y_diff>z_diff) ry=-rx-rz;
-    else rz=-rx-ry;
-    return {q:rx, r:rz};
+    let x=q,z=r,y=-x-z;
+    let rx=Math.round(x),ry=Math.round(y),rz=Math.round(z);
+    const xd=Math.abs(rx-x),yd=Math.abs(ry-y),zd=Math.abs(rz-z);
+    if(xd>yd&&xd>zd) rx=-ry-rz; else if(yd>zd) ry=-rx-rz; else rz=-rx-ry;
+    return {q:rx,r:rz};
   }
-  function hexCorners(cx,cy,s=SIZE){ return P.hexCorners(cx,cy,s); }
+  function pixelToAxial(x,y){
+    return axialRound((Math.sqrt(3)/3*x - y/3)/SIZE, (2/3*y)/SIZE);
+  }
+  function hexCorners(cx,cy,s=SIZE){
+    const pts=[];
+    for(let i=0;i<6;i++){
+      const a=-Math.PI/2+i*Math.PI/3;
+      pts.push([cx+s*Math.cos(a), cy+s*Math.sin(a)]);
+    }
+    return pts;
+  }
 
   const state = {
-    world: 'alpen',
+    catalog: [], images: new Map(),
     bag: [], market: [], placed: new Map(),
     selected: 0, hover: null,
-    turn: 1, maxTurns: 18,
-    view: { x:0, y:0, scale:1 },
-    draggingTable: false, dragStart: null,
-    score: 0,
+    turn: 1, maxTurns: 16, score: 0,
+    view: {x:0,y:0,scale:1},
+    dragging: false, dragStart: null,
   };
 
-  const land = document.getElementById('land');
-  const hints = document.getElementById('hints');
-  const ghost = document.getElementById('ghost');
-  const table = document.getElementById('table');
-  const wrap = document.getElementById('table-wrap');
-  const ORIGIN = { x: 2000, y: 2000 };
+  const land=document.getElementById('land');
+  const hints=document.getElementById('hints');
+  const ghost=document.getElementById('ghost');
+  const table=document.getElementById('table');
+  const wrap=document.getElementById('table-wrap');
 
-  const worldSel = document.getElementById('world');
-  Object.values(P.WORLDS).forEach(w=>{
-    const o=document.createElement('option');
-    o.value=w.id; o.textContent=w.name;
-    worldSel.appendChild(o);
-  });
-  worldSel.value = state.world;
-  worldSel.onchange = ()=>{
-    state.world = worldSel.value;
-    if(state.placed.size){
-      redrawAll(); renderMarket();
-      setStatus('Welt: '+P.WORLDS[state.world].name+' (gleiche Partie, neuer Pinsel)');
+  function cloneSpec(s){
+    return {
+      ...s,
+      features: (s.features||[]).slice(),
+      dual: s.dual ? s.dual.slice() : null,
+      rot: s.rot||0,
+    };
+  }
+
+  async function loadAssets(){
+    const res = await fetch('assets/manifest.json');
+    const manifest = await res.json();
+    state.catalog = manifest;
+    await Promise.all(manifest.map(t => new Promise((resolve,reject)=>{
+      const img = new Image();
+      img.onload=()=>{ state.images.set(t.id, img); resolve(); };
+      img.onerror=()=>reject(new Error('fail '+t.file));
+      img.src = t.file;
+    })));
+  }
+
+  function paintTile(ctx, tile, cx, cy, s, opts={}){
+    const img = state.images.get(tile.id);
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate((tile.rot||0) * Math.PI/3);
+    // clip hex
+    const pts = hexCorners(0,0,s);
+    ctx.beginPath();
+    pts.forEach((p,i)=> i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));
+    ctx.closePath();
+    ctx.clip();
+    if(img){
+      ctx.drawImage(img, -s, -s, s*2, s*2);
+    } else {
+      ctx.fillStyle='#456';
+      ctx.fill();
     }
-  };
-
-  function paintOpts(extra){
-    return Object.assign({ world: state.world }, extra||{});
+    ctx.restore();
+    // rim
+    ctx.beginPath();
+    hexCorners(cx,cy,s).forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));
+    ctx.closePath();
+    ctx.strokeStyle = opts.selected ? '#f0a35e' : 'rgba(20,24,32,.65)';
+    ctx.lineWidth = opts.selected ? 4 : 2;
+    ctx.stroke();
   }
 
-  function resizeLayers(){
-    const w=4000,h=4000;
-    [land,hints].forEach(c=>{ c.width=w; c.height=h; c.style.width=w+'px'; c.style.height=h+'px'; });
-    ghost.width = SIZE*2+12; ghost.height = SIZE*2+12;
-    ghost.style.width = (SIZE*2+12)+'px'; ghost.style.height=(SIZE*2+12)+'px';
-  }
-  function applyView(){
-    const rect = wrap.getBoundingClientRect();
-    const tx = rect.width/2 + state.view.x;
-    const ty = rect.height/2 + state.view.y;
-    table.style.transform = `translate(${tx}px,${ty}px) scale(${state.view.scale}) translate(${-ORIGIN.x}px,${-ORIGIN.y}px)`;
+  function biomesOf(tile){
+    if(tile.dual) return new Set(tile.dual);
+    return new Set([tile.biome]);
   }
 
-  function startGame(){
-    document.getElementById('boot').classList.remove('on');
-    state.world = worldSel.value;
-    state.bag = P.buildBag(state.world);
-    state.market = [];
-    state.placed = new Map();
-    state.selected = 0;
-    state.turn = 1;
-    state.score = 0;
-    state.view = {x:0,y:0,scale:1};
-    const starter = P.makeDual('wiese','wald');
-    starter.rot = 1;
-    starter.seed = P.hashStr(state.world+':starter');
-    placeTile(0,0, starter, true);
-    refillMarket();
-    resizeLayers();
-    applyView();
-    redrawAll();
-    renderMarket();
-    setStatus(P.WORLDS[state.world].name+' · Kachel wählen · R drehen · anlegen');
-    updateHUD();
+  function shuffle(a){
+    for(let i=a.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  function buildBag(){
+    // prefer variety: all feature tiles + mix of mono/dual
+    const feats = state.catalog.filter(t=> (t.features||[]).length);
+    const base = state.catalog.filter(t=> !(t.features||[]).length);
+    const bag = shuffle(feats.map(cloneSpec).concat(shuffle(base.map(cloneSpec)).slice(0, 40)));
+    return bag;
   }
 
   function refillMarket(){
-    while(state.market.length < 4 && state.bag.length) state.market.push(state.bag.pop());
-    if(state.selected >= state.market.length) state.selected = Math.max(0, state.market.length-1);
+    while(state.market.length<4 && state.bag.length) state.market.push(state.bag.pop());
+    if(state.selected>=state.market.length) state.selected=Math.max(0,state.market.length-1);
   }
-  function placeTile(q,r,tile,silent=false){
-    state.placed.set(key(q,r), {q,r,tile: P.cloneTile(tile)});
-    if(!silent) toast('Gelegt');
-  }
+
   function validPlacements(){
     if(!state.placed.size) return [{q:0,r:0}];
-    const cands = new Map();
+    const c=new Map();
     for(const {q,r} of state.placed.values()){
       DIRS.forEach(([dq,dr])=>{
-        const nq=q+dq, nr=r+dr, k=key(nq,nr);
-        if(!state.placed.has(k)) cands.set(k,{q:nq,r:nr});
+        const nq=q+dq,nr=r+dr,k=key(nq,nr);
+        if(!state.placed.has(k)) c.set(k,{q:nq,r:nr});
       });
     }
-    return [...cands.values()];
+    return [...c.values()];
   }
-  function edgeMatchCount(q,r,tile){
-    const edges = tile.edges();
-    let match=0, total=0;
-    DIRS.forEach(([dq,dr],i)=>{
-      const n = state.placed.get(key(q+dq,r+dr));
+
+  function edgeMatch(q,r,tile){
+    // biome adjacency score
+    let match=0,total=0;
+    DIRS.forEach(([dq,dr])=>{
+      const n=state.placed.get(key(q+dq,r+dr));
       if(!n) return;
       total++;
-      const opp = (i+3)%6;
-      if(n.tile.edges()[opp] === edges[i]) match++;
+      const A=biomesOf(tile), B=biomesOf(n.tile);
+      for(const b of A){ if(B.has(b)){ match++; break; } }
     });
     return {match,total};
   }
 
-  function redrawAll(){
-    const ctx = land.getContext('2d');
-    ctx.clearRect(0,0,land.width,land.height);
-    // felt
-    const g=ctx.createRadialGradient(ORIGIN.x,ORIGIN.y,100,ORIGIN.x,ORIGIN.y,1400);
-    g.addColorStop(0,'#243448');
-    g.addColorStop(1,'#152030');
-    ctx.fillStyle=g;
-    ctx.fillRect(0,0,land.width,land.height);
-    for(const cell of state.placed.values()){
-      const p = axialToPixel(cell.q, cell.r);
-      P.paintTile(ctx, cell.tile, ORIGIN.x + p.x, ORIGIN.y + p.y, SIZE, paintOpts());
+  function featureBonus(){
+    let bonus=0;
+    const feats=new Set();
+    for(const c of state.placed.values()){
+      (c.tile.features||[]).forEach(f=>feats.add(f));
+      if((c.tile.features||[]).includes('bruecke')) bonus+=2;
+      if((c.tile.features||[]).includes('sturzbruecke')) bonus+=1;
+      if((c.tile.features||[]).includes('hoehle')) bonus+=2;
+      if((c.tile.features||[]).includes('wasserfall')) bonus+=3;
+      if((c.tile.features||[]).includes('abzweig')) bonus+=1;
+      if((c.tile.features||[]).includes('ereignis')) bonus+=2;
+      if((c.tile.features||[]).includes('ruine')) bonus+=2;
     }
-    redrawHints();
-    redrawGhost();
+    return {bonus, feats:[...feats]};
+  }
+
+  function computeScore(){
+    // largest connected component per biome (cell shares biome)
+    const best=Object.fromEntries(BIOME_SCORE.map(b=>[b,0]));
+    const visited=new Set();
+    for(const cell of state.placed.values()){
+      for(const bio of biomesOf(cell.tile)){
+        if(!BIOME_SCORE.includes(bio)) continue;
+        const sk=key(cell.q,cell.r)+'|'+bio;
+        if(visited.has(sk)) continue;
+        let n=0; const q=[cell]; visited.add(sk);
+        while(q.length){
+          const c=q.pop(); n++;
+          DIRS.forEach(([dq,dr])=>{
+            const nb=state.placed.get(key(c.q+dq,c.r+dr));
+            if(!nb || !biomesOf(nb.tile).has(bio)) return;
+            const vk=key(nb.q,nb.r)+'|'+bio;
+            if(visited.has(vk)) return;
+            visited.add(vk); q.push(nb);
+          });
+        }
+        if(n>best[bio]) best[bio]=n;
+      }
+    }
+    const {bonus,feats}=featureBonus();
+    const total=BIOME_SCORE.reduce((s,b)=>s+best[b],0)+bonus;
+    return {best,bonus,feats,total};
+  }
+
+  function resize(){
+    [land,hints].forEach(c=>{c.width=4000;c.height=4000;c.style.width='4000px';c.style.height='4000px';});
+    ghost.width=SIZE*2+16; ghost.height=SIZE*2+16;
+    ghost.style.width=ghost.width+'px'; ghost.style.height=ghost.height+'px';
+  }
+  function applyView(){
+    const rect=wrap.getBoundingClientRect();
+    table.style.transform=`translate(${rect.width/2+state.view.x}px,${rect.height/2+state.view.y}px) scale(${state.view.scale}) translate(${-ORIGIN.x}px,${-ORIGIN.y}px)`;
+  }
+
+  function redrawAll(){
+    const ctx=land.getContext('2d');
+    ctx.clearRect(0,0,4000,4000);
+    const g=ctx.createRadialGradient(ORIGIN.x,ORIGIN.y,80,ORIGIN.x,ORIGIN.y,1400);
+    g.addColorStop(0,'#243448'); g.addColorStop(1,'#152030');
+    ctx.fillStyle=g; ctx.fillRect(0,0,4000,4000);
+    // sort by y for mild depth
+    const cells=[...state.placed.values()].sort((a,b)=>a.r-b.r || a.q-b.q);
+    for(const cell of cells){
+      const p=axialToPixel(cell.q,cell.r);
+      paintTile(ctx, cell.tile, ORIGIN.x+p.x, ORIGIN.y+p.y, SIZE);
+    }
+    redrawHints(); redrawGhost();
   }
   function redrawHints(){
-    const ctx = hints.getContext('2d');
-    ctx.clearRect(0,0,hints.width,hints.height);
+    const ctx=hints.getContext('2d');
+    ctx.clearRect(0,0,4000,4000);
     if(!state.market.length) return;
-    const tile = P.cloneTile(state.market[state.selected]);
+    const tile=state.market[state.selected];
     for(const {q,r} of validPlacements()){
-      const p = axialToPixel(q,r);
-      const cx = ORIGIN.x + p.x, cy = ORIGIN.y + p.y;
-      const m = edgeMatchCount(q,r,tile);
-      const pts = hexCorners(cx,cy,SIZE*0.92);
+      const p=axialToPixel(q,r);
+      const cx=ORIGIN.x+p.x, cy=ORIGIN.y+p.y;
+      const m=edgeMatch(q,r,tile);
       ctx.beginPath();
-      pts.forEach((pt,i)=>i?ctx.lineTo(pt[0],pt[1]):ctx.moveTo(pt[0],pt[1]));
+      hexCorners(cx,cy,SIZE*0.92).forEach((pt,i)=>i?ctx.lineTo(pt[0],pt[1]):ctx.moveTo(pt[0],pt[1]));
       ctx.closePath();
-      ctx.fillStyle = 'rgba(240,163,94,.18)';
-      ctx.strokeStyle = m.match===m.total && m.total>0 ? 'rgba(125,206,160,.95)' : 'rgba(240,163,94,.85)';
-      ctx.lineWidth = 2.5;
-      ctx.setLineDash([6,4]);
-      ctx.fill(); ctx.stroke();
-      ctx.setLineDash([]);
+      ctx.fillStyle='rgba(240,163,94,.16)';
+      ctx.strokeStyle=(m.total&&m.match===m.total)?'rgba(125,206,160,.95)':'rgba(240,163,94,.85)';
+      ctx.lineWidth=2.5; ctx.setLineDash([6,4]); ctx.fill(); ctx.stroke(); ctx.setLineDash([]);
       if(m.total){
-        ctx.fillStyle = '#eef3f8';
-        ctx.font = 'bold 12px system-ui';
-        ctx.textAlign='center';
+        ctx.fillStyle='#eef3f8'; ctx.font='bold 12px system-ui'; ctx.textAlign='center';
         ctx.fillText(m.match+'/'+m.total, cx, cy+4);
       }
     }
   }
   function redrawGhost(){
-    const gctx = ghost.getContext('2d');
-    gctx.clearRect(0,0,ghost.width,ghost.height);
-    if(!state.market.length || !state.hover){ ghost.style.display='none'; return; }
-    P.paintTile(gctx, state.market[state.selected], ghost.width/2, ghost.height/2, SIZE*0.95, paintOpts({selected:true}));
-    const p = axialToPixel(state.hover.q, state.hover.r);
+    const g=ghost.getContext('2d');
+    g.clearRect(0,0,ghost.width,ghost.height);
+    if(!state.market.length||!state.hover){ghost.style.display='none';return;}
+    paintTile(g, state.market[state.selected], ghost.width/2, ghost.height/2, SIZE*0.95, {selected:true});
+    const p=axialToPixel(state.hover.q,state.hover.r);
     ghost.style.display='block';
-    ghost.style.left = (ORIGIN.x + p.x - ghost.width/2) + 'px';
-    ghost.style.top = (ORIGIN.y + p.y - ghost.height/2) + 'px';
+    ghost.style.left=(ORIGIN.x+p.x-ghost.width/2)+'px';
+    ghost.style.top=(ORIGIN.y+p.y-ghost.height/2)+'px';
   }
   function renderMarket(){
-    const root = document.getElementById('market');
+    const root=document.getElementById('market');
     root.innerHTML='';
     state.market.forEach((tile,i)=>{
       const slot=document.createElement('button');
-      slot.className='slot'+(i===state.selected?' sel':'');
       slot.type='button';
+      slot.className='slot'+(i===state.selected?' sel':'');
       const c=document.createElement('canvas');
-      c.width=140; c.height=156;
-      P.paintTile(c.getContext('2d'), tile, 70, 78, 54, paintOpts({selected:i===state.selected}));
+      c.width=160; c.height=176;
+      paintTile(c.getContext('2d'), tile, 80, 88, 62, {selected:i===state.selected});
       slot.appendChild(c);
-      const idx=document.createElement('div'); idx.className='idx'; idx.textContent=String(i+1);
-      slot.appendChild(idx);
-      slot.onclick=()=>{ state.selected=i; renderMarket(); redrawHints(); redrawGhost(); setStatus('Kachel '+(i+1)+' · R drehen'); };
+      const idx=document.createElement('div'); idx.className='idx'; idx.textContent=String(i+1); slot.appendChild(idx);
+      const tag=document.createElement('div'); tag.className='tag'; tag.textContent=tile.label||tile.biome; slot.appendChild(tag);
+      slot.onclick=()=>{state.selected=i; renderMarket(); redrawHints(); redrawGhost();};
       root.appendChild(slot);
     });
   }
-  function setStatus(t){ document.getElementById('status').textContent=t; }
+  function setStatus(t){document.getElementById('status').textContent=t;}
   function updateHUD(){
     document.getElementById('turn').textContent=String(state.turn);
     document.getElementById('maxturn').textContent=String(state.maxTurns);
     document.getElementById('score').textContent=String(state.score);
-    document.getElementById('btn-end').disabled = state.turn <= state.maxTurns && state.market.length>0;
+    document.getElementById('btn-end').disabled = state.turn<=state.maxTurns && state.market.length>0;
   }
-  function toast(msg){
+  function toast(m){
     const el=document.getElementById('toast');
-    el.textContent=msg; el.classList.add('on');
-    setTimeout(()=>el.classList.remove('on'), 900);
+    el.textContent=m; el.classList.add('on');
+    setTimeout(()=>el.classList.remove('on'),900);
   }
 
-  function computeScore(){
-    const visited = new Set();
-    const best = Object.fromEntries(P.HLIST.map(h=>[h,0]));
-    function habitatsOn(tile){
-      if(tile.kind==='mono') return new Set([tile.a]);
-      return new Set([tile.a, tile.b]);
-    }
-    function edgeHab(tile, edgeIdx){ return tile.edges()[edgeIdx]; }
-    for(const cell of state.placed.values()){
-      for(const hid of habitatsOn(cell.tile)){
-        const startK = key(cell.q,cell.r)+'|'+hid;
-        if(visited.has(startK)) continue;
-        let n=0;
-        const q=[cell];
-        visited.add(startK);
-        while(q.length){
-          const c=q.pop(); n++;
-          DIRS.forEach(([dq,dr],ei)=>{
-            const nq=c.q+dq, nr=c.r+dr;
-            const nb=state.placed.get(key(nq,nr));
-            if(!nb) return;
-            if(!habitatsOn(nb.tile).has(hid)) return;
-            if(edgeHab(c.tile, ei)!==hid) return;
-            if(edgeHab(nb.tile, (ei+3)%6)!==hid) return;
-            const vk=key(nq,nr)+'|'+hid;
-            if(visited.has(vk)) return;
-            visited.add(vk);
-            q.push(nb);
-          });
-        }
-        if(n>best[hid]) best[hid]=n;
-      }
-    }
-    const total = P.HLIST.reduce((s,h)=>s+best[h],0);
-    return {best,total};
-  }
-  function showScore(final=false){
-    const {best,total}=computeScore();
-    state.score=total; updateHUD();
-    const world = P.WORLDS[state.world];
-    const modal=document.getElementById('modal');
-    const bg=document.getElementById('modal-bg');
-    modal.innerHTML = `<div class="kicker">${final?'Partie':'Zwischenwertung'} · ${world.name}</div>
-      <h1 style="margin:0 0 8px;font-size:1.4rem">${total} Punkte</h1>
-      <p style="color:var(--muted)">Größte zusammenhängende Fläche je Biotop.</p>
-      ${P.HLIST.map(h=>`<div class="scoreline"><span>${world.H[h].name}</span><span>${best[h]}</span></div>`).join('')}
-      <div class="row" style="margin-top:16px">
-        <button class="btn primary" id="ok">${final?'Neu legen':'Weiter'}</button>
-        <a class="btn" href="DRUCK.html?world=${state.world}" target="_blank">Diese Welt drucken</a>
-      </div>`;
-    bg.classList.add('on');
-    document.getElementById('ok').onclick=()=>{ bg.classList.remove('on'); if(final) startGame(); };
+  function startGame(){
+    document.getElementById('boot').classList.remove('on');
+    state.bag=buildBag();
+    state.market=[]; state.placed=new Map();
+    state.selected=0; state.turn=1; state.score=0;
+    state.view={x:0,y:0,scale:1};
+    // starter: meadow/forest dual if available else first
+    let starter = state.catalog.find(t=>t.dual && t.dual.includes('wiese') && t.dual.includes('wald'));
+    if(!starter) starter = state.catalog.find(t=>t.biome==='wiese') || state.catalog[0];
+    starter = cloneSpec(starter); starter.rot=1;
+    state.placed.set(key(0,0), {q:0,r:0,tile:starter});
+    refillMarket();
+    resize(); applyView(); redrawAll(); renderMarket(); updateHUD();
+    setStatus('Kachel wählen · R drehen · gelbes Feld · Landschaft wächst');
   }
 
   function clientToTable(cx,cy){
-    const rect = wrap.getBoundingClientRect();
-    const x = (cx - rect.left - rect.width/2 - state.view.x) / state.view.scale + ORIGIN.x;
-    const y = (cy - rect.top - rect.height/2 - state.view.y) / state.view.scale + ORIGIN.y;
-    return {x,y};
+    const rect=wrap.getBoundingClientRect();
+    return {
+      x:(cx-rect.left-rect.width/2-state.view.x)/state.view.scale+ORIGIN.x,
+      y:(cy-rect.top-rect.height/2-state.view.y)/state.view.scale+ORIGIN.y
+    };
   }
+
   wrap.addEventListener('pointerdown', e=>{
-    if(e.button===1 || e.button===2 || e.altKey || e.shiftKey){
-      state.draggingTable=true;
-      state.dragStart={x:e.clientX, y:e.clientY, vx:state.view.x, vy:state.view.y};
+    if(e.button===1||e.button===2||e.altKey||e.shiftKey){
+      state.dragging=true;
+      state.dragStart={x:e.clientX,y:e.clientY,vx:state.view.x,vy:state.view.y};
       wrap.setPointerCapture(e.pointerId);
     }
   });
   wrap.addEventListener('pointermove', e=>{
-    if(state.draggingTable && state.dragStart){
-      state.view.x = state.dragStart.vx + (e.clientX-state.dragStart.x);
-      state.view.y = state.dragStart.vy + (e.clientY-state.dragStart.y);
+    if(state.dragging&&state.dragStart){
+      state.view.x=state.dragStart.vx+(e.clientX-state.dragStart.x);
+      state.view.y=state.dragStart.vy+(e.clientY-state.dragStart.y);
       applyView(); return;
     }
-    const pt = clientToTable(e.clientX,e.clientY);
-    const ax = pixelToAxial(pt.x-ORIGIN.x, pt.y-ORIGIN.y);
-    const hit = validPlacements().find(p=>p.q===ax.q && p.r===ax.r);
-    const prev = state.hover;
-    state.hover = hit || null;
-    if((prev?.q!==state.hover?.q)||(prev?.r!==state.hover?.r)) redrawGhost();
+    const pt=clientToTable(e.clientX,e.clientY);
+    const ax=pixelToAxial(pt.x-ORIGIN.x, pt.y-ORIGIN.y);
+    const hit=validPlacements().find(p=>p.q===ax.q&&p.r===ax.r)||null;
+    const prev=state.hover; state.hover=hit;
+    if(prev?.q!==hit?.q||prev?.r!==hit?.r) redrawGhost();
   });
-  wrap.addEventListener('pointerup', ()=>{ state.draggingTable=false; state.dragStart=null; });
-  wrap.addEventListener('pointerleave', ()=>{ state.hover=null; redrawGhost(); });
+  wrap.addEventListener('pointerup', ()=>{state.dragging=false; state.dragStart=null;});
+  wrap.addEventListener('pointerleave', ()=>{state.hover=null; redrawGhost();});
+  wrap.addEventListener('contextmenu', e=>e.preventDefault());
+  wrap.addEventListener('wheel', e=>{
+    e.preventDefault();
+    state.view.scale=Math.min(2.2, Math.max(0.35, state.view.scale*(e.deltaY>0?0.9:1.1)));
+    applyView();
+  }, {passive:false});
   wrap.addEventListener('click', e=>{
-    if(e.altKey||e.shiftKey) return;
-    if(!state.market.length) return;
-    const pt = clientToTable(e.clientX,e.clientY);
-    const ax = pixelToAxial(pt.x-ORIGIN.x, pt.y-ORIGIN.y);
-    if(!validPlacements().some(p=>p.q===ax.q && p.r===ax.r)) return;
-    const tile = state.market[state.selected];
-    placeTile(ax.q, ax.r, tile);
+    if(e.altKey||e.shiftKey||!state.market.length) return;
+    const pt=clientToTable(e.clientX,e.clientY);
+    const ax=pixelToAxial(pt.x-ORIGIN.x, pt.y-ORIGIN.y);
+    if(!validPlacements().some(p=>p.q===ax.q&&p.r===ax.r)) return;
+    const tile=cloneSpec(state.market[state.selected]);
+    state.placed.set(key(ax.q,ax.r), {q:ax.q,r:ax.r,tile});
     state.market.splice(state.selected,1);
     refillMarket();
     const sc=computeScore(); state.score=sc.total;
-    state.turn++;
-    state.hover=null;
+    state.turn++; state.hover=null;
     renderMarket(); redrawAll(); updateHUD();
-    if(state.turn > state.maxTurns || !state.market.length){
-      setStatus('Landschaft steht. Wertung!');
+    const feats=(tile.features||[]);
+    if(state.turn>state.maxTurns || !state.market.length){
+      setStatus('Landschaft steht.');
       showScore(true);
     } else {
-      const m=edgeMatchCount(ax.q,ax.r, state.placed.get(key(ax.q,ax.r)).tile);
-      setStatus(m.total?`Kantenpass ${m.match}/${m.total}.`:'Weiter legen · drehen nicht vergessen.');
+      const m=edgeMatch(ax.q,ax.r,tile);
+      setStatus((feats.length?feats.join(', ')+' · ':'')+(m.total?`Anschluss ${m.match}/${m.total}`:'Weiter legen'));
     }
   });
-  wrap.addEventListener('wheel', e=>{
-    e.preventDefault();
-    const f = e.deltaY>0 ? 0.9 : 1.1;
-    state.view.scale = Math.min(2.2, Math.max(0.35, state.view.scale*f));
-    applyView();
-  }, {passive:false});
-  wrap.addEventListener('contextmenu', e=>e.preventDefault());
 
-  document.getElementById('btn-rot').onclick = ()=>{
+  document.getElementById('btn-rot').onclick=()=>{
     if(!state.market.length) return;
-    P.rotateTile(state.market[state.selected], 1);
-    renderMarket(); redrawHints(); redrawGhost();
-    toast('Gedreht 60°');
+    state.market[state.selected].rot = ((state.market[state.selected].rot||0)+1)%6;
+    renderMarket(); redrawHints(); redrawGhost(); toast('60°');
   };
   window.addEventListener('keydown', e=>{
-    if(e.key==='r' || e.key==='R' || e.key===' '){ e.preventDefault(); document.getElementById('btn-rot').click(); }
-    if(e.key>='1' && e.key<='4'){
-      const i=+e.key-1; if(i<state.market.length){ state.selected=i; renderMarket(); redrawHints(); redrawGhost(); }
-    }
+    if(e.key==='r'||e.key==='R'||e.key===' '){e.preventDefault(); document.getElementById('btn-rot').click();}
+    if(e.key>='1'&&e.key<='4'){const i=+e.key-1; if(i<state.market.length){state.selected=i; renderMarket(); redrawHints(); redrawGhost();}}
   });
-  document.getElementById('btn-zoomin').onclick=()=>{ state.view.scale=Math.min(2.2,state.view.scale*1.15); applyView(); };
-  document.getElementById('btn-zoomout').onclick=()=>{ state.view.scale=Math.max(0.35,state.view.scale/1.15); applyView(); };
+  document.getElementById('btn-zoomin').onclick=()=>{state.view.scale=Math.min(2.2,state.view.scale*1.15); applyView();};
+  document.getElementById('btn-zoomout').onclick=()=>{state.view.scale=Math.max(0.35,state.view.scale/1.15); applyView();};
   document.getElementById('btn-score').onclick=()=>showScore(false);
   document.getElementById('btn-end').onclick=()=>showScore(true);
-  document.getElementById('btn-new').onclick=()=>{ if(confirm('Neue Landschaft?')) startGame(); };
+  document.getElementById('btn-new').onclick=()=>{if(confirm('Neue Landschaft?')) startGame();};
   document.getElementById('btn-start').onclick=startGame;
-  document.getElementById('btn-help').onclick=showHelp;
-  document.getElementById('btn-rules').onclick=showHelp;
-
-  function showHelp(){
-    const modal=document.getElementById('modal');
+  document.getElementById('btn-help').onclick=()=>{
     const bg=document.getElementById('modal-bg');
-    modal.innerHTML=`<div class="kicker">Regeln</div>
-      <h1 style="margin:0 0 8px;font-size:1.3rem">Legen wie Cascadia</h1>
-      <p style="color:var(--muted);line-height:1.5">
-      1. Bemalte Hex-Kachel aus dem Markt (1–4).<br>
-      2. <strong>Drehen</strong> (R / Leertaste) in 60°-Schritten.<br>
-      3. An gelbe Nachbarfelder legen.<br>
-      4. Gleiche Biotope an der Naht = Bild + Punkte.<br>
-      5. Nach ${state.maxTurns} Kacheln: Wertung der größten Flächen.<br>
-      6. <strong>Welt</strong> oben wechselt Palette/Malstil der ganzen Landschaft.<br>
-      7. <a class="link" href="DRUCK.html" target="_blank">Druckbögen</a> — A4/A3, Hex-mm wählbar, dichte Packung.
-      </p>
+    const m=document.getElementById('modal');
+    m.innerHTML=`<div class="kicker">Regeln</div>
+      <h1 style="font-size:1.25rem;margin:0 0 8px">Landschaft legen</h1>
+      <p>1. Markt-Kachel wählen (1–4)<br>
+      2. <strong>R</strong> drehen — Wege/Flüsse/Brücken drehen mit<br>
+      3. An gelbe Nachbarn legen<br>
+      4. Punkte: große Biotop-Flächen + Bonus für Höhle, Brücke, Wasserfall, Abzweig, Ereignis, Ruine<br>
+      5. <a class="link" href="DRUCK.html">Druckbögen</a> zum Ausschneiden (1:1 mm)</p>
       <div class="row"><button class="btn primary" id="ok">OK</button></div>`;
     bg.classList.add('on');
     document.getElementById('ok').onclick=()=>bg.classList.remove('on');
+  };
+
+  function showScore(final){
+    const {best,bonus,feats,total}=computeScore();
+    state.score=total; updateHUD();
+    const names={berg:'Berg',wald:'Wald',wiese:'Wiese',moor:'Moor',fluss:'Fluss'};
+    const bg=document.getElementById('modal-bg');
+    const m=document.getElementById('modal');
+    m.innerHTML=`<div class="kicker">${final?'Partie':'Zwischenwertung'}</div>
+      <h1 style="margin:0 0 8px;font-size:1.4rem">${total} Punkte</h1>
+      <p>Flächen + Merkmalsbonus (${bonus})</p>
+      ${BIOME_SCORE.map(b=>`<div class="scoreline"><span>${names[b]}</span><span>${best[b]}</span></div>`).join('')}
+      <div class="scoreline"><span>Merkmale</span><span>${feats.join(', ')||'—'}</span></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn primary" id="ok">${final?'Neu':'Weiter'}</button>
+        <a class="btn" href="DRUCK.html">Drucken</a>
+      </div>`;
+    bg.classList.add('on');
+    document.getElementById('ok').onclick=()=>{bg.classList.remove('on'); if(final) startGame();};
   }
+
   window.addEventListener('resize', applyView);
+
+  loadAssets().then(()=>{
+    document.getElementById('loading').remove();
+    document.getElementById('app').hidden=false;
+    document.getElementById('boot').classList.add('on');
+    setStatus('Bereit');
+  }).catch(err=>{
+    document.getElementById('loading').textContent='Fehler beim Laden: '+err.message;
+  });
 })();
 </script>
 </body>

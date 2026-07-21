@@ -1,0 +1,826 @@
+[
+  {
+    "id": "m-berg-0",
+    "uid": 1,
+    "biome": "berg",
+    "seed": 1017,
+    "features": [],
+    "river_angle": 0,
+    "label": "Berg",
+    "file": "assets/tiles/m-berg-0.png"
+  },
+  {
+    "id": "m-berg-1",
+    "uid": 2,
+    "biome": "berg",
+    "seed": 1034,
+    "features": [],
+    "river_angle": 0,
+    "label": "Berg",
+    "file": "assets/tiles/m-berg-1.png"
+  },
+  {
+    "id": "m-berg-2",
+    "uid": 3,
+    "biome": "berg",
+    "seed": 1051,
+    "features": [],
+    "river_angle": 0,
+    "label": "Berg",
+    "file": "assets/tiles/m-berg-2.png"
+  },
+  {
+    "id": "m-berg-3",
+    "uid": 4,
+    "biome": "berg",
+    "seed": 1068,
+    "features": [],
+    "river_angle": 0,
+    "label": "Berg",
+    "file": "assets/tiles/m-berg-3.png"
+  },
+  {
+    "id": "m-wald-0",
+    "uid": 5,
+    "biome": "wald",
+    "seed": 1085,
+    "features": [],
+    "river_angle": 0,
+    "label": "Wald",
+    "file": "assets/tiles/m-wald-0.png"
+  },
+  {
+    "id": "m-wald-1",
+    "uid": 6,
+    "biome": "wald",
+    "seed": 1102,
+    "features": [],
+    "river_angle": 0,
+    "label": "Wald",
+    "file": "assets/tiles/m-wald-1.png"
+  },
+  {
+    "id": "m-wald-2",
+    "uid": 7,
+    "biome": "wald",
+    "seed": 1119,
+    "features": [],
+    "river_angle": 0,
+    "label": "Wald",
+    "file": "assets/tiles/m-wald-2.png"
+  },
+  {
+    "id": "m-wald-3",
+    "uid": 8,
+    "biome": "wald",
+    "seed": 1136,
+    "features": [],
+    "river_angle": 0,
+    "label": "Wald",
+    "file": "assets/tiles/m-wald-3.png"
+  },
+  {
+    "id": "m-wiese-0",
+    "uid": 9,
+    "biome": "wiese",
+    "seed": 1153,
+    "features": [],
+    "river_angle": 0,
+    "label": "Wiese",
+    "file": "assets/tiles/m-wiese-0.png"
+  },
+  {
+    "id": "m-wiese-1",
+    "uid": 10,
+    "biome": "wiese",
+    "seed": 1170,
+    "features": [],
+    "river_angle": 0,
+    "label": "Wiese",
+    "file": "assets/tiles/m-wiese-1.png"
+  },
+  {
+    "id": "m-wiese-2",
+    "uid": 11,
+    "biome": "wiese",
+    "seed": 1187,
+    "features": [],
+    "river_angle": 0,
+    "label": "Wiese",
+    "file": "assets/tiles/m-wiese-2.png"
+  },
+  {
+    "id": "m-wiese-3",
+    "uid": 12,
+    "biome": "wiese",
+    "seed": 1204,
+    "features": [],
+    "river_angle": 0,
+    "label": "Wiese",
+    "file": "assets/tiles/m-wiese-3.png"
+  },
+  {
+    "id": "m-moor-0",
+    "uid": 13,
+    "biome": "moor",
+    "seed": 1221,
+    "features": [],
+    "river_angle": 0,
+    "label": "Moor",
+    "file": "assets/tiles/m-moor-0.png"
+  },
+  {
+    "id": "m-moor-1",
+    "uid": 14,
+    "biome": "moor",
+    "seed": 1238,
+    "features": [],
+    "river_angle": 0,
+    "label": "Moor",
+    "file": "assets/tiles/m-moor-1.png"
+  },
+  {
+    "id": "m-moor-2",
+    "uid": 15,
+    "biome": "moor",
+    "seed": 1255,
+    "features": [],
+    "river_angle": 0,
+    "label": "Moor",
+    "file": "assets/tiles/m-moor-2.png"
+  },
+  {
+    "id": "m-moor-3",
+    "uid": 16,
+    "biome": "moor",
+    "seed": 1272,
+    "features": [],
+    "river_angle": 0,
+    "label": "Moor",
+    "file": "assets/tiles/m-moor-3.png"
+  },
+  {
+    "id": "m-fluss-0",
+    "uid": 17,
+    "biome": "fluss",
+    "seed": 1289,
+    "features": [
+      "fluss"
+    ],
+    "river_angle": 0.0,
+    "label": "Fluss",
+    "file": "assets/tiles/m-fluss-0.png"
+  },
+  {
+    "id": "m-fluss-1",
+    "uid": 18,
+    "biome": "fluss",
+    "seed": 1306,
+    "features": [
+      "fluss"
+    ],
+    "river_angle": 0.5235987755982988,
+    "label": "Fluss",
+    "file": "assets/tiles/m-fluss-1.png"
+  },
+  {
+    "id": "m-fluss-2",
+    "uid": 19,
+    "biome": "fluss",
+    "seed": 1323,
+    "features": [
+      "fluss"
+    ],
+    "river_angle": 1.0471975511965976,
+    "label": "Fluss",
+    "file": "assets/tiles/m-fluss-2.png"
+  },
+  {
+    "id": "m-fluss-3",
+    "uid": 20,
+    "biome": "fluss",
+    "seed": 1340,
+    "features": [
+      "fluss"
+    ],
+    "river_angle": 1.5707963267948966,
+    "label": "Fluss",
+    "file": "assets/tiles/m-fluss-3.png"
+  },
+  {
+    "id": "d-berg-wald-0",
+    "uid": 21,
+    "biome": "berg",
+    "dual": [
+      "berg",
+      "wald"
+    ],
+    "split_angle": -1.5707963267948966,
+    "seed": 2273,
+    "features": [],
+    "label": "Berg/Wald",
+    "file": "assets/tiles/d-berg-wald-0.png"
+  },
+  {
+    "id": "d-berg-wald-1",
+    "uid": 22,
+    "biome": "berg",
+    "dual": [
+      "berg",
+      "wald"
+    ],
+    "split_angle": -1.0471975511965979,
+    "seed": 2286,
+    "features": [],
+    "label": "Berg/Wald",
+    "file": "assets/tiles/d-berg-wald-1.png"
+  },
+  {
+    "id": "d-berg-wiese-0",
+    "uid": 23,
+    "biome": "berg",
+    "dual": [
+      "berg",
+      "wiese"
+    ],
+    "split_angle": -1.5707963267948966,
+    "seed": 2299,
+    "features": [],
+    "label": "Berg/Wiese",
+    "file": "assets/tiles/d-berg-wiese-0.png"
+  },
+  {
+    "id": "d-berg-wiese-1",
+    "uid": 24,
+    "biome": "berg",
+    "dual": [
+      "berg",
+      "wiese"
+    ],
+    "split_angle": -1.0471975511965979,
+    "seed": 2312,
+    "features": [],
+    "label": "Berg/Wiese",
+    "file": "assets/tiles/d-berg-wiese-1.png"
+  },
+  {
+    "id": "d-berg-moor-0",
+    "uid": 25,
+    "biome": "berg",
+    "dual": [
+      "berg",
+      "moor"
+    ],
+    "split_angle": -1.5707963267948966,
+    "seed": 2325,
+    "features": [],
+    "label": "Berg/Moor",
+    "file": "assets/tiles/d-berg-moor-0.png"
+  },
+  {
+    "id": "d-berg-moor-1",
+    "uid": 26,
+    "biome": "berg",
+    "dual": [
+      "berg",
+      "moor"
+    ],
+    "split_angle": -1.0471975511965979,
+    "seed": 2338,
+    "features": [],
+    "label": "Berg/Moor",
+    "file": "assets/tiles/d-berg-moor-1.png"
+  },
+  {
+    "id": "d-berg-fluss-0",
+    "uid": 27,
+    "biome": "berg",
+    "dual": [
+      "berg",
+      "fluss"
+    ],
+    "split_angle": -1.5707963267948966,
+    "seed": 2351,
+    "features": [],
+    "label": "Berg/Fluss",
+    "file": "assets/tiles/d-berg-fluss-0.png"
+  },
+  {
+    "id": "d-berg-fluss-1",
+    "uid": 28,
+    "biome": "berg",
+    "dual": [
+      "berg",
+      "fluss"
+    ],
+    "split_angle": -1.0471975511965979,
+    "seed": 2364,
+    "features": [],
+    "label": "Berg/Fluss",
+    "file": "assets/tiles/d-berg-fluss-1.png"
+  },
+  {
+    "id": "d-wald-wiese-0",
+    "uid": 29,
+    "biome": "wald",
+    "dual": [
+      "wald",
+      "wiese"
+    ],
+    "split_angle": -1.5707963267948966,
+    "seed": 2377,
+    "features": [],
+    "label": "Wald/Wiese",
+    "file": "assets/tiles/d-wald-wiese-0.png"
+  },
+  {
+    "id": "d-wald-wiese-1",
+    "uid": 30,
+    "biome": "wald",
+    "dual": [
+      "wald",
+      "wiese"
+    ],
+    "split_angle": -1.0471975511965979,
+    "seed": 2390,
+    "features": [],
+    "label": "Wald/Wiese",
+    "file": "assets/tiles/d-wald-wiese-1.png"
+  },
+  {
+    "id": "d-wald-moor-0",
+    "uid": 31,
+    "biome": "wald",
+    "dual": [
+      "wald",
+      "moor"
+    ],
+    "split_angle": -1.5707963267948966,
+    "seed": 2403,
+    "features": [],
+    "label": "Wald/Moor",
+    "file": "assets/tiles/d-wald-moor-0.png"
+  },
+  {
+    "id": "d-wald-moor-1",
+    "uid": 32,
+    "biome": "wald",
+    "dual": [
+      "wald",
+      "moor"
+    ],
+    "split_angle": -1.0471975511965979,
+    "seed": 2416,
+    "features": [],
+    "label": "Wald/Moor",
+    "file": "assets/tiles/d-wald-moor-1.png"
+  },
+  {
+    "id": "d-wald-fluss-0",
+    "uid": 33,
+    "biome": "wald",
+    "dual": [
+      "wald",
+      "fluss"
+    ],
+    "split_angle": -1.5707963267948966,
+    "seed": 2429,
+    "features": [],
+    "label": "Wald/Fluss",
+    "file": "assets/tiles/d-wald-fluss-0.png"
+  },
+  {
+    "id": "d-wald-fluss-1",
+    "uid": 34,
+    "biome": "wald",
+    "dual": [
+      "wald",
+      "fluss"
+    ],
+    "split_angle": -1.0471975511965979,
+    "seed": 2442,
+    "features": [],
+    "label": "Wald/Fluss",
+    "file": "assets/tiles/d-wald-fluss-1.png"
+  },
+  {
+    "id": "d-wiese-moor-0",
+    "uid": 35,
+    "biome": "wiese",
+    "dual": [
+      "wiese",
+      "moor"
+    ],
+    "split_angle": -1.5707963267948966,
+    "seed": 2455,
+    "features": [],
+    "label": "Wiese/Moor",
+    "file": "assets/tiles/d-wiese-moor-0.png"
+  },
+  {
+    "id": "d-wiese-moor-1",
+    "uid": 36,
+    "biome": "wiese",
+    "dual": [
+      "wiese",
+      "moor"
+    ],
+    "split_angle": -1.0471975511965979,
+    "seed": 2468,
+    "features": [],
+    "label": "Wiese/Moor",
+    "file": "assets/tiles/d-wiese-moor-1.png"
+  },
+  {
+    "id": "d-wiese-fluss-0",
+    "uid": 37,
+    "biome": "wiese",
+    "dual": [
+      "wiese",
+      "fluss"
+    ],
+    "split_angle": -1.5707963267948966,
+    "seed": 2481,
+    "features": [],
+    "label": "Wiese/Fluss",
+    "file": "assets/tiles/d-wiese-fluss-0.png"
+  },
+  {
+    "id": "d-wiese-fluss-1",
+    "uid": 38,
+    "biome": "wiese",
+    "dual": [
+      "wiese",
+      "fluss"
+    ],
+    "split_angle": -1.0471975511965979,
+    "seed": 2494,
+    "features": [],
+    "label": "Wiese/Fluss",
+    "file": "assets/tiles/d-wiese-fluss-1.png"
+  },
+  {
+    "id": "d-moor-fluss-0",
+    "uid": 39,
+    "biome": "moor",
+    "dual": [
+      "moor",
+      "fluss"
+    ],
+    "split_angle": -1.5707963267948966,
+    "seed": 2507,
+    "features": [],
+    "label": "Moor/Fluss",
+    "file": "assets/tiles/d-moor-fluss-0.png"
+  },
+  {
+    "id": "d-moor-fluss-1",
+    "uid": 40,
+    "biome": "moor",
+    "dual": [
+      "moor",
+      "fluss"
+    ],
+    "split_angle": -1.0471975511965979,
+    "seed": 2520,
+    "features": [],
+    "label": "Moor/Fluss",
+    "file": "assets/tiles/d-moor-fluss-1.png"
+  },
+  {
+    "id": "f-wald-0-0",
+    "uid": 41,
+    "biome": "wald",
+    "seed": 5779,
+    "features": [
+      "pfad",
+      "abzweig"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Pfad-Abzweig",
+    "file": "assets/tiles/f-wald-0-0.png"
+  },
+  {
+    "id": "f-wald-0-1",
+    "uid": 42,
+    "biome": "wald",
+    "seed": 5798,
+    "features": [
+      "pfad",
+      "abzweig"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Pfad-Abzweig",
+    "file": "assets/tiles/f-wald-0-1.png"
+  },
+  {
+    "id": "f-wiese-1-0",
+    "uid": 43,
+    "biome": "wiese",
+    "seed": 5817,
+    "features": [
+      "pfad",
+      "ereignis"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Ereignis-Wiese",
+    "file": "assets/tiles/f-wiese-1-0.png"
+  },
+  {
+    "id": "f-wiese-1-1",
+    "uid": 44,
+    "biome": "wiese",
+    "seed": 5836,
+    "features": [
+      "pfad",
+      "ereignis"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Ereignis-Wiese",
+    "file": "assets/tiles/f-wiese-1-1.png"
+  },
+  {
+    "id": "f-berg-2-0",
+    "uid": 45,
+    "biome": "berg",
+    "seed": 5855,
+    "features": [
+      "hoehle",
+      "pfad"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Bergh\u00f6hle",
+    "file": "assets/tiles/f-berg-2-0.png"
+  },
+  {
+    "id": "f-berg-2-1",
+    "uid": 46,
+    "biome": "berg",
+    "seed": 5874,
+    "features": [
+      "hoehle",
+      "pfad"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Bergh\u00f6hle",
+    "file": "assets/tiles/f-berg-2-1.png"
+  },
+  {
+    "id": "f-fluss-3-0",
+    "uid": 47,
+    "biome": "fluss",
+    "seed": 5893,
+    "features": [
+      "bruecke",
+      "fluss"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Flussbr\u00fccke",
+    "file": "assets/tiles/f-fluss-3-0.png"
+  },
+  {
+    "id": "f-fluss-3-1",
+    "uid": 48,
+    "biome": "fluss",
+    "seed": 5912,
+    "features": [
+      "bruecke",
+      "fluss"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Flussbr\u00fccke",
+    "file": "assets/tiles/f-fluss-3-1.png"
+  },
+  {
+    "id": "f-fluss-4-0",
+    "uid": 49,
+    "biome": "fluss",
+    "seed": 5931,
+    "features": [
+      "sturzbruecke",
+      "fluss"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Sturzbr\u00fccke",
+    "file": "assets/tiles/f-fluss-4-0.png"
+  },
+  {
+    "id": "f-fluss-4-1",
+    "uid": 50,
+    "biome": "fluss",
+    "seed": 5950,
+    "features": [
+      "sturzbruecke",
+      "fluss"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Sturzbr\u00fccke",
+    "file": "assets/tiles/f-fluss-4-1.png"
+  },
+  {
+    "id": "f-berg-5-0",
+    "uid": 51,
+    "biome": "berg",
+    "seed": 5969,
+    "features": [
+      "wasserfall",
+      "fluss"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Wasserfall",
+    "file": "assets/tiles/f-berg-5-0.png"
+  },
+  {
+    "id": "f-berg-5-1",
+    "uid": 52,
+    "biome": "berg",
+    "seed": 5988,
+    "features": [
+      "wasserfall",
+      "fluss"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Wasserfall",
+    "file": "assets/tiles/f-berg-5-1.png"
+  },
+  {
+    "id": "f-wald-6-0",
+    "uid": 53,
+    "biome": "wald",
+    "seed": 6007,
+    "features": [
+      "ruine",
+      "pfad"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Waldruine",
+    "file": "assets/tiles/f-wald-6-0.png"
+  },
+  {
+    "id": "f-wald-6-1",
+    "uid": 54,
+    "biome": "wald",
+    "seed": 6026,
+    "features": [
+      "ruine",
+      "pfad"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Waldruine",
+    "file": "assets/tiles/f-wald-6-1.png"
+  },
+  {
+    "id": "f-moor-7-0",
+    "uid": 55,
+    "biome": "moor",
+    "seed": 6045,
+    "features": [
+      "pfad",
+      "ereignis"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Moorpfad",
+    "file": "assets/tiles/f-moor-7-0.png"
+  },
+  {
+    "id": "f-moor-7-1",
+    "uid": 56,
+    "biome": "moor",
+    "seed": 6064,
+    "features": [
+      "pfad",
+      "ereignis"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Moorpfad",
+    "file": "assets/tiles/f-moor-7-1.png"
+  },
+  {
+    "id": "f-fels-8-0",
+    "uid": 57,
+    "biome": "fels",
+    "seed": 6083,
+    "features": [
+      "hoehle"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Felsh\u00f6hle",
+    "file": "assets/tiles/f-fels-8-0.png"
+  },
+  {
+    "id": "f-fels-8-1",
+    "uid": 58,
+    "biome": "fels",
+    "seed": 6102,
+    "features": [
+      "hoehle"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Felsh\u00f6hle",
+    "file": "assets/tiles/f-fels-8-1.png"
+  },
+  {
+    "id": "f-wiese-9-0",
+    "uid": 59,
+    "biome": "wiese",
+    "seed": 6121,
+    "features": [
+      "pfad",
+      "fluss",
+      "bruecke"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Br\u00fcckenwiese",
+    "file": "assets/tiles/f-wiese-9-0.png"
+  },
+  {
+    "id": "f-wiese-9-1",
+    "uid": 60,
+    "biome": "wiese",
+    "seed": 6140,
+    "features": [
+      "pfad",
+      "fluss",
+      "bruecke"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Br\u00fcckenwiese",
+    "file": "assets/tiles/f-wiese-9-1.png"
+  },
+  {
+    "id": "f-wald-10-0",
+    "uid": 61,
+    "biome": "wald",
+    "seed": 6159,
+    "features": [
+      "fluss",
+      "bruecke"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Waldbr\u00fccke",
+    "file": "assets/tiles/f-wald-10-0.png"
+  },
+  {
+    "id": "f-wald-10-1",
+    "uid": 62,
+    "biome": "wald",
+    "seed": 6178,
+    "features": [
+      "fluss",
+      "bruecke"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Waldbr\u00fccke",
+    "file": "assets/tiles/f-wald-10-1.png"
+  },
+  {
+    "id": "f-berg-11-0",
+    "uid": 63,
+    "biome": "berg",
+    "seed": 6197,
+    "features": [
+      "pfad",
+      "abzweig"
+    ],
+    "river_angle": 0.2,
+    "path_angle": 0.3,
+    "label": "Pass-Abzweig",
+    "file": "assets/tiles/f-berg-11-0.png"
+  },
+  {
+    "id": "f-berg-11-1",
+    "uid": 64,
+    "biome": "berg",
+    "seed": 6216,
+    "features": [
+      "pfad",
+      "abzweig"
+    ],
+    "river_angle": 0.8283185307179586,
+    "path_angle": 0.7,
+    "label": "Pass-Abzweig",
+    "file": "assets/tiles/f-berg-11-1.png"
+  }
+]
