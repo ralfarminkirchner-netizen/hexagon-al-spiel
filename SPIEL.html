@@ -3,67 +3,115 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-<meta name="theme-color" content="#1a2332"/>
+<meta name="theme-color" content="#241b12"/>
 <title>HEXAGON-AL · Landschaft legen</title>
 <style>
-:root{--bg:#1a2332;--line:#3d4f6a;--text:#eef3f8;--muted:#9fb0c6;--hit:#f0a35e}
+:root{ --bg:#241b12; --panel:#2f2519; --line:#5a4936; --text:#f3ead9; --muted:#c9b89a; --acc:#d9a45b; --good:#8cdc96; --warn:#e8c060; --bad:#e07060; }
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
+html,body{margin:0;height:100%;overflow:hidden;color:var(--text);font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
+body{background:radial-gradient(ellipse at 50% 30%,rgba(120,90,50,.22),transparent 60%),repeating-linear-gradient(90deg,#241b12 0 34px,#221910 34px 68px),#241b12}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 #app{display:grid;grid-template-rows:auto 1fr auto;height:100%}
-header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 14px;background:rgba(12,18,28,.94);border-bottom:1px solid var(--line);z-index:5}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 12px;background:rgba(24,17,10,.94);border-bottom:1px solid var(--line);z-index:5}
 .brand{font-weight:900;letter-spacing:.08em}
-.pill{padding:6px 10px;border-radius:999px;background:#121a26;border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--muted)}
+.pill{padding:5px 10px;border-radius:999px;background:#1a130c;border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--muted)}
 .pill strong{color:var(--text)}
 .spacer{flex:1}
-.btn{padding:10px 14px;border-radius:12px;font-weight:800;border:1px solid var(--line);background:#2a3a52;min-height:42px;color:var(--text);text-decoration:none;display:inline-flex;align-items:center}
-.btn.primary{background:linear-gradient(180deg,#f0b27a,#e67e22);color:#1a1208;border-color:transparent}
+.btn{padding:9px 13px;border-radius:12px;font-weight:800;border:1px solid var(--line);background:#3a2d1d;min-height:40px}
+.btn.primary{background:linear-gradient(180deg,#d9a45b,#b0782f);color:#1a1208;border-color:transparent}
+.btn.agent{background:linear-gradient(180deg,#5b8bd9,#2f5bb0);color:#fff;border-color:transparent}
+.btn:disabled{opacity:.4;cursor:not-allowed}
 .btn.ghost{background:transparent;color:var(--muted)}
-.btn:disabled{opacity:.4}
-#table-wrap{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,rgba(125,180,220,.08),transparent 55%),linear-gradient(180deg,#1e2a3c,#152030)}
-#table{position:absolute;left:0;top:0;transform-origin:0 0;width:4000px;height:4000px}
+#main{position:relative;display:grid;grid-template-columns:1fr 0px;transition:grid-template-columns .25s}
+#main.agenton{grid-template-columns:1fr 320px}
+#table-wrap{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,rgba(160,120,70,.14),transparent 60%),#2a2015}
+#table{position:absolute;left:0;top:0;transform-origin:0 0;width:5000px;height:5000px}
 #table canvas.layer{position:absolute;left:0;top:0}
-#ghost{position:absolute;pointer-events:none;opacity:.92;z-index:4}
-footer{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 12px;background:rgba(12,18,28,.95);border-top:1px solid var(--line)}
-@media(max-width:800px){footer{grid-template-columns:1fr}}
-.market{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
-.market-label{font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);min-width:70px}
-.slot{position:relative;width:104px;height:114px;flex:0 0 auto;border-radius:14px;background:#121a26;border:2px solid var(--line);display:grid;place-items:center}
-.slot.sel{border-color:var(--hit);box-shadow:0 0 0 3px rgba(240,163,94,.25);transform:translateY(-3px)}
-.slot canvas{width:90px;height:100px;pointer-events:none}
-.slot .idx{position:absolute;top:4px;left:6px;font-size:10px;font-weight:900;color:var(--muted)}
-.slot .tag{position:absolute;bottom:4px;left:4px;right:4px;font-size:9px;font-weight:800;color:#dfe8f4;text-align:center;text-shadow:0 1px 2px #000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ghost{position:absolute;pointer-events:none;opacity:.92;z-index:4;filter:drop-shadow(0 10px 18px rgba(0,0,0,.55))}
+#tip{position:fixed;z-index:35;pointer-events:none;background:rgba(20,14,8,.92);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:12px;font-weight:700;display:none;max-width:220px}
+#tip .fit{font-size:11px;font-weight:800}
+/* ——— Agent panel ——— */
+#agent{display:none;flex-direction:column;background:rgba(26,19,12,.97);border-left:1px solid var(--line);min-height:0}
+#main.agenton #agent{display:flex}
+#agent .ahead{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center}
+#agent .aface{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8bd9a4,#2f7bb0);display:grid;place-items:center;font-size:17px;box-shadow:0 0 12px rgba(91,139,217,.5)}
+#agent .aname{font-weight:900;font-size:13px}
+#agent .asub{font-size:10px;color:var(--muted)}
+#agentlog{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px}
+.amsg{max-width:92%;padding:8px 11px;border-radius:14px;font-size:12.5px;line-height:1.4;animation:pop .2s ease}
+.amsg.bot{align-self:flex-start;background:#3a2d1d;border:1px solid var(--line);border-bottom-left-radius:4px}
+.amsg.user{align-self:flex-end;background:#2f4a75;border-bottom-right-radius:4px}
+.amsg.bot.good{border-color:rgba(140,220,150,.5)}
+.amsg.bot.warn{border-color:rgba(232,192,96,.5)}
+@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+#agentform{display:flex;gap:6px;padding:8px;border-top:1px solid var(--line)}
+#agentform input{flex:1;background:#1a130c;border:1px solid var(--line);border-radius:10px;color:var(--text);padding:9px 10px;font:inherit;font-size:13px}
+#agentform button{padding:9px 12px;border-radius:10px;background:var(--acc);color:#1a1208;font-weight:900}
+.quickrow{display:flex;gap:6px;padding:0 8px 8px;flex-wrap:wrap}
+.quickrow button{font-size:11px;font-weight:800;padding:6px 9px;border-radius:999px;background:#1a130c;border:1px solid var(--line);color:var(--muted)}
+.quickrow button:hover{color:var(--text);border-color:var(--acc)}
+/* ——— market/footer ——— */
+footer{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 12px;background:rgba(24,17,10,.95);border-top:1px solid var(--line)}
+@media(max-width:820px){footer{grid-template-columns:1fr}}
+.market-label{font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.market{display:flex;gap:10px;align-items:center;overflow-x:auto;padding-bottom:4px}
+.slot{position:relative;width:96px;height:96px;flex:0 0 auto;border-radius:14px;background:#1a130c;border:2px solid var(--line);display:grid;place-items:center;transition:border-color .15s,transform .18s,box-shadow .18s;padding:4px}
+.slot:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 10px 22px rgba(0,0,0,.45);z-index:2}
+.slot.sel{border-color:var(--acc);box-shadow:0 0 0 3px rgba(217,164,91,.3);transform:translateY(-3px)}
+.slot canvas{width:84px;height:84px;pointer-events:none}
+.slot .idx{position:absolute;top:3px;left:6px;font-size:10px;font-weight:900;color:var(--muted);text-shadow:0 1px 2px #000}
 .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end}
 .help{font-size:12px;color:var(--muted);max-width:280px;line-height:1.35}
-.modal-bg{position:fixed;inset:0;background:rgba(8,12,20,.8);display:none;align-items:center;justify-content:center;z-index:40;padding:16px}
+/* ——— modals ——— */
+.modal-bg{position:fixed;inset:0;background:rgba(10,7,4,.84);display:none;align-items:center;justify-content:center;z-index:40;padding:14px}
 .modal-bg.on{display:flex}
-.modal{width:min(560px,100%);background:#243044;border:1px solid var(--line);border-radius:20px;padding:22px}
+.modal{width:min(620px,100%);background:#2f2519;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.6);max-height:90vh;overflow:auto}
 .modal h1{margin:0 0 8px;font-size:1.5rem}
-.modal p{margin:0 0 12px;color:var(--muted);line-height:1.5}
-.modal .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.kicker{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--hit);margin-bottom:8px}
+.modal p{margin:0 0 12px;color:#d8c9ae;line-height:1.5}
+.modal .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.kicker{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
 .scoreline{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-weight:700}
-#toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:#121a26;border:1px solid var(--line);padding:10px 16px;border-radius:12px;font-weight:800;opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
+.cfg{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin:10px 0}
+@media(max-width:560px){.cfg{grid-template-columns:1fr}}
+.cfg label{font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts button{padding:8px 11px;border-radius:10px;border:1.5px solid var(--line);background:#241b12;font-weight:800;font-size:12.5px;color:var(--muted)}
+.opts button.on{border-color:var(--acc);color:var(--text);background:#3a2d1d}
+.opts button.small{padding:6px 9px;font-size:11.5px}
+.big-choice{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.big-choice button{border:2px solid var(--line);border-radius:16px;padding:16px 10px;font-weight:900;font-size:1.05rem;background:#241b12}
+.big-choice button:hover{border-color:var(--acc)}
+.big-choice small{display:block;font-weight:600;color:var(--muted);margin-top:4px;font-size:.75rem}
+.qopt{display:block;width:100%;text-align:left;background:#241b12;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:700;margin:0 0 8px}
+.qopt:hover{border-color:var(--acc)}
+.qtag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:#5b8bd9;color:#fff;margin-bottom:10px}
+#toast{position:fixed;left:50%;bottom:130px;transform:translateX(-50%);background:#1a130c;border:1px solid var(--line);color:var(--text);padding:10px 16px;border-radius:12px;font-weight:800;opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
 #toast.on{opacity:1}
-a.link{color:#8ec5ff;font-weight:800}
-#loading{position:fixed;inset:0;display:grid;place-items:center;background:#1a2332;z-index:50;font-weight:800}
+#loadbar{position:fixed;inset:0;display:none;place-items:center;background:rgba(10,7,4,.9);z-index:60;color:var(--acc);font-weight:800}
+#loadbar.on{display:grid}
 </style>
 </head>
 <body>
-<div id="loading">Landschaftskacheln laden…</div>
-<div id="app" hidden>
-  <header>
-    <div class="brand">HEXAGON-AL</div>
-    <span class="pill">Landschaft</span>
-    <span class="pill">Zug <strong id="turn">1</strong>/<span id="maxturn">16</span></span>
-    <span class="pill">Punkte <strong id="score">0</strong></span>
-    <div class="spacer"></div>
-    <a class="btn ghost" href="DRUCK.html">Druckbögen</a>
-    <button class="btn" id="btn-rot">Drehen 60°</button>
-    <button class="btn" id="btn-score">Wertung</button>
-    <button class="btn ghost" id="btn-help">?</button>
-    <button class="btn ghost" id="btn-new">Neu</button>
-  </header>
+<div id="loadbar">male Landschaft …</div>
+<div id="app">
+<header>
+  <div class="brand">HEXAGON-AL</div>
+  <span class="pill" id="pill-shape">⬡ Hex</span>
+  <span class="pill" id="pill-world">🎨 —</span>
+  <span class="pill" id="pill-mode">Modus</span>
+  <span class="pill">Zug <strong id="turn">1</strong>/<span id="maxturn">18</span></span>
+  <span class="pill">Punkte <strong id="score">0</strong></span>
+  <span class="pill" id="pill-bonus" style="display:none">Bonus <strong id="bonus">0</strong></span>
+  <div class="spacer"></div>
+  <button class="btn agent" id="btn-agent">🤖 Landschafter</button>
+  <button class="btn" id="btn-suggest">✨ Vorschlag</button>
+  <button class="btn" id="btn-rot">⟳ <span id="rotdeg">60°</span></button>
+  <button class="btn ghost" id="btn-cfg">⚙</button>
+  <button class="btn ghost" id="btn-cloud-save" title="Landschaft in der Pipeline speichern">☁↑</button>
+  <button class="btn ghost" id="btn-cloud-load" title="Landschaft aus der Pipeline laden">☁↓</button>
+  <button class="btn ghost" id="btn-new">Neu</button>
+</header>
+<div id="main">
   <div id="table-wrap">
     <div id="table">
       <canvas id="land" class="layer"></canvas>
@@ -71,439 +119,847 @@ a.link{color:#8ec5ff;font-weight:800}
       <canvas id="ghost"></canvas>
     </div>
   </div>
-  <footer>
-    <div>
-      <div class="market-label">Markt · R drehen · anlegen</div>
-      <div class="market" id="market"></div>
+  <aside id="agent">
+    <div class="ahead">
+      <div class="aface">🧭</div>
+      <div><div class="aname">Landschafter</div><div class="asub">legt mit dir · offline</div></div>
     </div>
-    <div class="controls">
-      <div class="help" id="status">Lade…</div>
-      <button class="btn" id="btn-zoomout">−</button>
-      <button class="btn" id="btn-zoomin">+</button>
-      <button class="btn primary" id="btn-end" disabled>Werten</button>
+    <div id="agentlog"></div>
+    <div class="quickrow">
+      <button data-q="vorschlag">✨ Vorschlag</button>
+      <button data-q="punkte">🏅 Punkte</button>
+      <button data-q="regeln">📜 Regeln</button>
+      <button data-q="tipp">💡 Tipp</button>
     </div>
-  </footer>
+    <form id="agentform"><input id="agentin" placeholder="Frag den Landschafter…" autocomplete="off"><button>➤</button></form>
+  </aside>
 </div>
+<footer>
+  <div>
+    <div class="market-label">Markt · wählen · drehen (R) · anlegen — ✨ lässt passende Felder pulsieren</div>
+    <div class="market" id="market"></div>
+  </div>
+  <div class="controls">
+    <div class="help" id="status">Wähle Form und beginne.</div>
+    <button class="btn" id="btn-zoomout">−</button>
+    <button class="btn" id="btn-zoomin">+</button>
+    <button class="btn primary" id="btn-end" disabled>Werten</button>
+  </div>
+</footer>
+</div>
+<div id="tip"></div>
 <div id="toast"></div>
-<div class="modal-bg" id="boot">
+
+<div class="modal-bg on" id="boot">
   <div class="modal">
-    <div class="kicker">Gemalte Landschafts-Hexes · drehen · anlegen</div>
+    <div class="kicker">Gemalte Landschaft · Cascadia-Prinzip</div>
     <h1>HEXAGON-AL</h1>
-    <p>Du legst <strong>bemalte Landschaftskacheln</strong>: Wald, Berg, Wiese, Moor, Fluss — dazu <strong>Pfade, Abzweige, Brücken, Sturzbrücken, Höhlen, Wasserfälle, Ruinen, Ereignisse</strong>.</p>
-    <p>Drehen in 60°-Schritten. Gleiche Biotope an der Naht und anschließende Flüsse/Wege ergeben das Bild einer echten Landschaft.</p>
-    <div class="row">
-      <button class="btn primary" id="btn-start">Landschaft beginnen</button>
-      <a class="btn" href="DRUCK.html">Ausschneiden drucken</a>
-    </div>
+    <p>Bemalte Plättchen <strong>drehen</strong> und so legen, dass <em>eine</em> stimmige Landschaft entsteht. Alles konfigurierbar — Form, Welt, Regeln, Lernspiel.</p>
+    <div class="cfg" id="cfg-boot"></div>
+    <div class="row"><button class="btn primary" id="btn-start" disabled style="font-size:1.05rem;padding:14px 26px">Landschaft beginnen</button></div>
   </div>
 </div>
 <div class="modal-bg" id="modal-bg"><div class="modal" id="modal"></div></div>
+
+<script src="backend.js"></script>
 <script>
 (() => {
-  'use strict';
-  const SIZE = 64;
-  const DIRS = [[+1,0],[0,-1],[-1,-1],[-1,0],[0,+1],[+1,+1]];
-  const key = (q,r)=>q+','+r;
-  const ORIGIN = {x:2000,y:2000};
-  const BIOME_SCORE = ['berg','wald','wiese','moor','fluss'];
+'use strict';
 
-  function axialToPixel(q,r){
-    return {x: SIZE*Math.sqrt(3)*(q+r/2), y: SIZE*1.5*r};
+/* ================= Daten ================= */
+const HABS = ['wald','wiese','berg','fluss','dorf'];
+const HNAME = {wald:'Wald',wiese:'Wiese',berg:'Berg',fluss:'Fluss',dorf:'Dorf'};
+const HCOL  = {wald:'#2e6b3a',wiese:'#a9bd5a',berg:'#8d8794',fluss:'#3f8fb8',dorf:'#b5793d'};
+const WORLDS = {
+  r0:'Verwunschener Wald', r4:'Ritterland', r12:'Dorftal', r16:'Pastelltraum',
+  r24:'Goldene Hexe', r32:'Kühlküste', r40:'Waldidylle', mix:'Alles bunt'
+};
+const QUESTIONS = {
+ deutsch:{1:[
+   {q:'Welches Wort ist ein Nomen?',o:['Baum','schnell','rennt','und'],a:0},
+   {q:'Was passt: Der Hund ___',o:['bellt','schön','grün','langsam'],a:0},
+   {q:'Was reimt sich auf „Haus“?',o:['Maus','Baum','Wald','Tisch'],a:0},
+   {q:'Wie viele Silben hat „Apfel“?',o:['2','1','3','4'],a:0},
+   {q:'Welches Wort beginnt wie „Ball“?',o:['Brot','Tür','Apfel','Ei'],a:0},
+   {q:'Groß oder klein: „schule“ am Satzanfang?',o:['Groß','Klein'],a:0}],
+  2:[
+   {q:'Welches Wort ist ein Verb?',o:['laufen','Tisch','blau','sehr'],a:0},
+   {q:'Mehrzahl von „Kind“?',o:['Kinder','Kinds','Kindes','Kindern'],a:0},
+   {q:'Welcher Satz ist eine Frage?',o:['Kommst du mit?','Du kommst mit.','Ich gehe.','Das ist schön.'],a:0},
+   {q:'„schnell“ ist ein…',o:['Adjektiv','Nomen','Verb','Artikel'],a:0},
+   {q:'Welcher Artikel: ___ Sonne',o:['die','der','das'],a:0},
+   {q:'Vergangenheit von „spielen“?',o:['spielte','spielst','gespielt hat er morgen','spielend'],a:0}],
+  3:[
+   {q:'Was ist das Subjekt: „Der Fuchs jagt die Maus.“',o:['Der Fuchs','jagt','die Maus','keins'],a:0},
+   {q:'Welche Zeitform: „Er wird singen.“',o:['Futur I','Präsens','Perfekt','Präteritum'],a:0},
+   {q:'„freundlich“ — Steigerung?',o:['freundlicher','freundlichst am','mehr freundlich','freundligster'],a:0},
+   {q:'Welcher Satz steht im Passiv?',o:['Der Kuchen wird gebacken.','Er bäckt den Kuchen.','Sie aß Kuchen.','Wir backen.'],a:0},
+   {q:'Direkte Rede braucht…',o:['Anführungszeichen','Komma am Ende','Punkt davor','Bindestrich'],a:0},
+   {q:'„dem“ ist welcher Fall?',o:['Dativ','Nominativ','Akkusativ','Genitiv'],a:0}]},
+ mathe:{1:[
+   {q:'3 + 4 = ?',o:['7','6','8','5'],a:0},
+   {q:'10 − 6 = ?',o:['4','3','5','6'],a:0},
+   {q:'Was ist mehr: 8 oder 5?',o:['8','5','gleich'],a:0},
+   {q:'2 + 2 + 2 = ?',o:['6','4','8','22'],a:0},
+   {q:'Welche Zahl fehlt: 1, 2, 3, __',o:['4','5','6','7'],a:0},
+   {q:'7 + 5 = ?',o:['12','11','13','10'],a:0}],
+  2:[
+   {q:'6 × 7 = ?',o:['42','36','48','49'],a:0},
+   {q:'56 ÷ 8 = ?',o:['7','6','8','9'],a:0},
+   {q:'9 × 4 = ?',o:['36','32','38','45'],a:0},
+   {q:'100 − 37 = ?',o:['63','67','73','53'],a:0},
+   {q:'Ein Dreieck hat wie viele Ecken?',o:['3','4','5','6'],a:0},
+   {q:'8 × 8 = ?',o:['64','56','72','81'],a:0}],
+  3:[
+   {q:'1/2 von 48 = ?',o:['24','12','26','20'],a:0},
+   {q:'15 × 4 = ?',o:['60','45','54','64'],a:0},
+   {q:'144 ÷ 12 = ?',o:['12','11','14','10'],a:0},
+   {q:'Umfang: Quadrat, Seite 5 cm?',o:['20 cm','25 cm','10 cm','15 cm'],a:0},
+   {q:'0,5 + 0,25 = ?',o:['0,75','0,55','1,25','0,7'],a:0},
+   {q:'7² = ?',o:['49','14','42','56'],a:0}]},
+ englisch:{1:[
+   {q:'„Hund“ heißt auf Englisch…',o:['dog','cat','bird','fish'],a:0},
+   {q:'What color is the sun?',o:['yellow','blue','green','black'],a:0},
+   {q:'„rot“ = …',o:['red','blue','green','white'],a:0},
+   {q:'How many legs has a cat?',o:['four','two','six','eight'],a:0},
+   {q:'„Baum“ = …',o:['tree','flower','grass','bush'],a:0},
+   {q:'Hello means…',o:['Hallo','Tschüss','Danke','Bitte'],a:0}],
+  2:[
+   {q:'I ___ a book. (lesen)',o:['read','reads','reading','readed'],a:0},
+   {q:'Opposite of „big“?',o:['small','tall','long','wide'],a:0},
+   {q:'„She plays“ — Fragewort?',o:['Does she play?','Do she play?','Is she play?','She plays?'],a:0},
+   {q:'„gestern“ = …',o:['yesterday','today','tomorrow','now'],a:0},
+   {q:'Mehrzahl von „child“?',o:['children','childs','childes','child'],a:0},
+   {q:'„schneller als“ = …',o:['faster than','more fast than','fast than','fastest than'],a:0}],
+  3:[
+   {q:'Past tense of „go“?',o:['went','goed','gone to','going'],a:0},
+   {q:'„If I ___ rich…“',o:['were','am','was been','be'],a:0},
+   {q:'Which is a synonym of „happy“?',o:['glad','sad','angry','tired'],a:0},
+   {q:'Present perfect: „I have ___“',o:['eaten','ate','eated','eat'],a:0},
+   {q:'„obwohl“ = …',o:['although','because','however','unless'],a:0},
+   {q:'Article: ___ honest man',o:['an','a','the','—'],a:0}]},
+ sachkunde:{1:[
+   {q:'Welches Tier lebt im Wald?',o:['Fuchs','Hai','Kamel','Pinguin'],a:0},
+   {q:'Was brauchen Pflanzen zum Wachsen?',o:['Wasser und Licht','Cola','Dunkelheit','Salz'],a:0},
+   {q:'Wie viele Jahreszeiten gibt es?',o:['4','2','3','5'],a:0},
+   {q:'Woher kommt Honig?',o:['Bienen','Kühe','Bäume','Blumen direkt'],a:0},
+   {q:'Was ist KEIN Obst?',o:['Karotte','Apfel','Birne','Erdbeere'],a:0},
+   {q:'Tagsüber sehen wir…',o:['die Sonne','den Mond immer','Sterne gut','nichts'],a:0}],
+  2:[
+   {q:'Welcher Baum trägt Eicheln?',o:['Eiche','Birke','Tanne','Palme'],a:0},
+   {q:'Wasser wird zu Eis bei…',o:['0 °C','10 °C','50 °C','100 °C'],a:0},
+   {q:'Welches Tier ist ein Säugetier?',o:['Fledermaus','Ameise','Forelle','Spinne'],a:0},
+   {q:'Der Kreislauf: Regen kommt aus…',o:['Wolken','Flüssen direkt','Bäumen','Bergen'],a:0},
+   {q:'Was frisst ein Eichhörnchen gern?',o:['Nüsse','Gras nur','Fisch','Steine'],a:0},
+   {q:'Welcher Sinn: mit den Ohren?',o:['Hören','Sehen','Riechen','Tasten'],a:0}],
+  3:[
+   {q:'Fotosynthese macht…',o:['Sauerstoff','Stickstoff','Kohlensäure','Methan'],a:0},
+   {q:'Welcher Fluss fließt durch Hamburg?',o:['Elbe','Rhein','Donau','Oder'],a:0},
+   {q:'Ein Biotop ist…',o:['Lebensraum','Tierart','Pflanze','Gestein'],a:0},
+   {q:'Welches Organ pumpt Blut?',o:['Herz','Lunge','Leber','Niere'],a:0},
+   {q:'Kontinent mit den meisten Ländern?',o:['Afrika','Europa','Asien','Amerika'],a:0},
+   {q:'Moor entsteht aus…',o:['abgestorbenen Pflanzen','Sand','Lava','Salz'],a:0}]}
+};
+const SUBJNAME={deutsch:'Deutsch',mathe:'Mathe',englisch:'Englisch',sachkunde:'Sachkunde'};
+const LEVELNAME={1:'Klasse 1–2',2:'Klasse 3–4',3:'Klasse 5–6'};
+
+/* ================= Config (persist) ================= */
+const DEF = {shape:'hex', world:'r0', mode:'game', strict:false, duals:true,
+             turns:18, subject:'deutsch', level:1, agentOn:true, suggestAuto:true};
+let CFG = {...DEF};
+try{ Object.assign(CFG, JSON.parse(localStorage.getItem('hexal-cfg')||'{}')); }catch(e){}
+function saveCfg(){ localStorage.setItem('hexal-cfg', JSON.stringify(CFG)); }
+
+/* ================= Shapes ================= */
+const SHAPES = {
+  hex:{ size:58, rotStep:60, edges:6,
+    dirs:[[+1,0],[0,-1],[-1,-1],[-1,0],[0,+1],[+1,+1]],
+    toPix(q,r,s){return{x:s*Math.sqrt(3)*(q+r/2),y:s*1.5*r};},
+    toAxial(x,y,s){const q=(Math.sqrt(3)/3*x-1/3*y)/s,r=(2/3*y)/s;
+      let rx=Math.round(q),rz=Math.round(r),ry=-rx-rz;
+      const dq=Math.abs(rx-q),dr=Math.abs(rz-r),dy=Math.abs(ry+q+r);
+      if(dq>dr&&dq>dy)rx=-ry-rz;else if(dr>dy)rz=-rx-ry;return{q:rx,r:rz};},
+    clip(c,s){c.beginPath();for(let i=0;i<6;i++){const a=-Math.PI/2+i*Math.PI/3,px=s*Math.cos(a),py=s*Math.sin(a);i?c.lineTo(px,py):c.moveTo(px,py);}c.closePath();},
+    half(c,side,rot,s){const b=-Math.PI/2+rot*Math.PI/3+(side?Math.PI:0);c.beginPath();c.moveTo(0,0);c.arc(0,0,s*1.02,b,b+Math.PI);c.closePath();},
+    edgePoint(s,i){const a=-Math.PI/2+i*Math.PI/3+Math.PI/6;return[Math.cos(a)*s*.8,Math.sin(a)*s*.8];}
+  },
+  quad:{ size:62, rotStep:90, edges:4,
+    dirs:[[+1,0],[0,-1],[-1,0],[0,+1]],
+    toPix(q,r,s){return{x:q*s*2.02,y:r*s*2.02};},
+    toAxial(x,y,s){return{q:Math.round(x/(s*2.02)),r:Math.round(y/(s*2.02))};},
+    clip(c,s){const h=s*.98;c.beginPath();c.roundRect(-h,-h,h*2,h*2,10);},
+    half(c,side,rot,s){const h=s*1.02;const rr=(((rot+(side?2:0))%4)+4)%4;c.beginPath();
+      if(rr===0)c.rect(-h,-h,2*h,h);else if(rr===1)c.rect(0,-h,h,2*h);
+      else if(rr===2)c.rect(-h,0,2*h,h);else c.rect(-h,-h,h,2*h);},
+    edgePoint(s,i){return[[0,-s*.8],[s*.8,0],[0,s*.8],[-s*.8,0]][i];}
   }
-  function axialRound(q,r){
-    let x=q,z=r,y=-x-z;
-    let rx=Math.round(x),ry=Math.round(y),rz=Math.round(z);
-    const xd=Math.abs(rx-x),yd=Math.abs(ry-y),zd=Math.abs(rz-z);
-    if(xd>yd&&xd>zd) rx=-ry-rz; else if(yd>zd) ry=-rx-rz; else rz=-rx-ry;
-    return {q:rx,r:rz};
+};
+let S = SHAPES[CFG.shape];
+
+/* ================= Assets ================= */
+const IMGS={}; let manifest=null;
+const MANIFEST_EMBED = {"berg":["assets/tiles/berg__r16_51.jpg","assets/tiles/berg__r16_52.jpg","assets/tiles/berg__r16_56.jpg","assets/tiles/berg__r16_60.jpg","assets/tiles/berg__r16_61.jpg","assets/tiles/berg__r16_66.jpg","assets/tiles/berg__r16_67.jpg","assets/tiles/berg__r16_70.jpg","assets/tiles/berg__r16_71.jpg","assets/tiles/berg__r16_72.jpg","assets/tiles/berg__r16_76.jpg","assets/tiles/berg__r24_00.jpg","assets/tiles/berg__r24_01.jpg","assets/tiles/berg__r24_02.jpg","assets/tiles/berg__r24_10.jpg","assets/tiles/berg__r24_11.jpg","assets/tiles/berg__r24_12.jpg","assets/tiles/berg__r24_13.jpg","assets/tiles/berg__r24_20.jpg","assets/tiles/berg__r24_21.jpg","assets/tiles/berg__r24_22.jpg","assets/tiles/berg__r24_23.jpg","assets/tiles/berg__r32_10.jpg","assets/tiles/berg__r32_11.jpg","assets/tiles/berg__r32_13.jpg","assets/tiles/berg__r32_14.jpg","assets/tiles/berg__r32_15.jpg","assets/tiles/berg__r32_30.jpg","assets/tiles/berg__r32_31.jpg","assets/tiles/berg__r32_34.jpg","assets/tiles/berg__r32_35.jpg"],"dorf":["assets/tiles/dorf__r0_17.jpg","assets/tiles/dorf__r16_17.jpg","assets/tiles/dorf__r16_43.jpg","assets/tiles/dorf__r40_20.jpg","assets/tiles/dorf__r4_33.jpg","assets/tiles/dorf__r4_73.jpg","assets/tiles/dorf__r4_74.jpg"],"fluss":["assets/tiles/fluss__r16_34.jpg","assets/tiles/fluss__r16_44.jpg","assets/tiles/fluss__r16_54.jpg","assets/tiles/fluss__r16_55.jpg","assets/tiles/fluss__r16_57.jpg","assets/tiles/fluss__r16_64.jpg","assets/tiles/fluss__r16_77.jpg","assets/tiles/fluss__r32_32.jpg"],"wald":["assets/tiles/wald__r0_01.jpg","assets/tiles/wald__r0_05.jpg","assets/tiles/wald__r0_06.jpg","assets/tiles/wald__r0_07.jpg","assets/tiles/wald__r0_20.jpg","assets/tiles/wald__r0_27.jpg","assets/tiles/wald__r0_30.jpg","assets/tiles/wald__r0_34.jpg","assets/tiles/wald__r0_40.jpg","assets/tiles/wald__r0_50.jpg","assets/tiles/wald__r0_57.jpg","assets/tiles/wald__r0_60.jpg","assets/tiles/wald__r0_62.jpg","assets/tiles/wald__r0_67.jpg","assets/tiles/wald__r0_73.jpg","assets/tiles/wald__r12_00.jpg","assets/tiles/wald__r12_01.jpg","assets/tiles/wald__r12_02.jpg","assets/tiles/wald__r12_03.jpg","assets/tiles/wald__r12_04.jpg","assets/tiles/wald__r12_05.jpg","assets/tiles/wald__r12_06.jpg","assets/tiles/wald__r12_07.jpg","assets/tiles/wald__r12_10.jpg","assets/tiles/wald__r12_11.jpg","assets/tiles/wald__r12_12.jpg","assets/tiles/wald__r12_13.jpg","assets/tiles/wald__r12_14.jpg","assets/tiles/wald__r12_15.jpg","assets/tiles/wald__r12_17.jpg","assets/tiles/wald__r12_20.jpg","assets/tiles/wald__r12_21.jpg","assets/tiles/wald__r12_22.jpg","assets/tiles/wald__r12_23.jpg","assets/tiles/wald__r12_24.jpg","assets/tiles/wald__r12_25.jpg","assets/tiles/wald__r12_26.jpg","assets/tiles/wald__r12_27.jpg","assets/tiles/wald__r12_30.jpg","assets/tiles/wald__r12_31.jpg","assets/tiles/wald__r12_32.jpg","assets/tiles/wald__r12_33.jpg","assets/tiles/wald__r12_34.jpg","assets/tiles/wald__r12_35.jpg","assets/tiles/wald__r12_36.jpg","assets/tiles/wald__r12_37.jpg","assets/tiles/wald__r12_40.jpg","assets/tiles/wald__r12_41.jpg","assets/tiles/wald__r12_42.jpg","assets/tiles/wald__r12_43.jpg","assets/tiles/wald__r12_44.jpg","assets/tiles/wald__r12_45.jpg","assets/tiles/wald__r12_46.jpg","assets/tiles/wald__r12_47.jpg","assets/tiles/wald__r12_50.jpg","assets/tiles/wald__r12_51.jpg","assets/tiles/wald__r12_52.jpg","assets/tiles/wald__r12_53.jpg","assets/tiles/wald__r12_54.jpg","assets/tiles/wald__r12_55.jpg","assets/tiles/wald__r12_56.jpg","assets/tiles/wald__r12_57.jpg","assets/tiles/wald__r12_60.jpg","assets/tiles/wald__r12_61.jpg","assets/tiles/wald__r12_62.jpg","assets/tiles/wald__r12_63.jpg","assets/tiles/wald__r12_64.jpg","assets/tiles/wald__r12_65.jpg","assets/tiles/wald__r12_66.jpg","assets/tiles/wald__r12_67.jpg","assets/tiles/wald__r12_77.jpg","assets/tiles/wald__r32_03.jpg","assets/tiles/wald__r32_20.jpg","assets/tiles/wald__r32_23.jpg","assets/tiles/wald__r40_00.jpg","assets/tiles/wald__r40_01.jpg","assets/tiles/wald__r40_21.jpg","assets/tiles/wald__r4_01.jpg","assets/tiles/wald__r4_05.jpg","assets/tiles/wald__r4_06.jpg","assets/tiles/wald__r4_07.jpg","assets/tiles/wald__r4_12.jpg","assets/tiles/wald__r4_16.jpg","assets/tiles/wald__r4_21.jpg","assets/tiles/wald__r4_25.jpg","assets/tiles/wald__r4_26.jpg","assets/tiles/wald__r4_30.jpg","assets/tiles/wald__r4_31.jpg","assets/tiles/wald__r4_32.jpg","assets/tiles/wald__r4_35.jpg","assets/tiles/wald__r4_36.jpg","assets/tiles/wald__r4_37.jpg","assets/tiles/wald__r4_40.jpg","assets/tiles/wald__r4_41.jpg","assets/tiles/wald__r4_42.jpg","assets/tiles/wald__r4_43.jpg","assets/tiles/wald__r4_44.jpg","assets/tiles/wald__r4_45.jpg","assets/tiles/wald__r4_46.jpg","assets/tiles/wald__r4_47.jpg","assets/tiles/wald__r4_50.jpg","assets/tiles/wald__r4_51.jpg","assets/tiles/wald__r4_52.jpg","assets/tiles/wald__r4_54.jpg","assets/tiles/wald__r4_55.jpg","assets/tiles/wald__r4_56.jpg","assets/tiles/wald__r4_57.jpg","assets/tiles/wald__r4_61.jpg","assets/tiles/wald__r4_62.jpg","assets/tiles/wald__r4_64.jpg","assets/tiles/wald__r4_65.jpg","assets/tiles/wald__r4_66.jpg","assets/tiles/wald__r4_71.jpg","assets/tiles/wald__r4_77.jpg"],"wiese":["assets/tiles/wiese__r0_00.jpg","assets/tiles/wiese__r0_02.jpg","assets/tiles/wiese__r0_03.jpg","assets/tiles/wiese__r0_04.jpg","assets/tiles/wiese__r0_10.jpg","assets/tiles/wiese__r0_11.jpg","assets/tiles/wiese__r0_12.jpg","assets/tiles/wiese__r0_13.jpg","assets/tiles/wiese__r0_14.jpg","assets/tiles/wiese__r0_15.jpg","assets/tiles/wiese__r0_16.jpg","assets/tiles/wiese__r0_21.jpg","assets/tiles/wiese__r0_22.jpg","assets/tiles/wiese__r0_23.jpg","assets/tiles/wiese__r0_24.jpg","assets/tiles/wiese__r0_25.jpg","assets/tiles/wiese__r0_26.jpg","assets/tiles/wiese__r0_31.jpg","assets/tiles/wiese__r0_32.jpg","assets/tiles/wiese__r0_33.jpg","assets/tiles/wiese__r0_35.jpg","assets/tiles/wiese__r0_36.jpg","assets/tiles/wiese__r0_37.jpg","assets/tiles/wiese__r0_41.jpg","assets/tiles/wiese__r0_42.jpg","assets/tiles/wiese__r0_43.jpg","assets/tiles/wiese__r0_44.jpg","assets/tiles/wiese__r0_45.jpg","assets/tiles/wiese__r0_46.jpg","assets/tiles/wiese__r0_47.jpg","assets/tiles/wiese__r0_51.jpg","assets/tiles/wiese__r0_52.jpg","assets/tiles/wiese__r0_53.jpg","assets/tiles/wiese__r0_54.jpg","assets/tiles/wiese__r0_55.jpg","assets/tiles/wiese__r0_56.jpg","assets/tiles/wiese__r0_61.jpg","assets/tiles/wiese__r0_63.jpg","assets/tiles/wiese__r0_64.jpg","assets/tiles/wiese__r0_65.jpg","assets/tiles/wiese__r0_66.jpg","assets/tiles/wiese__r0_70.jpg","assets/tiles/wiese__r0_71.jpg","assets/tiles/wiese__r0_72.jpg","assets/tiles/wiese__r0_74.jpg","assets/tiles/wiese__r0_75.jpg","assets/tiles/wiese__r0_76.jpg","assets/tiles/wiese__r0_77.jpg","assets/tiles/wiese__r12_16.jpg","assets/tiles/wiese__r12_70.jpg","assets/tiles/wiese__r12_71.jpg","assets/tiles/wiese__r12_72.jpg","assets/tiles/wiese__r12_73.jpg","assets/tiles/wiese__r12_74.jpg","assets/tiles/wiese__r12_75.jpg","assets/tiles/wiese__r12_76.jpg","assets/tiles/wiese__r16_00.jpg","assets/tiles/wiese__r16_01.jpg","assets/tiles/wiese__r16_02.jpg","assets/tiles/wiese__r16_03.jpg","assets/tiles/wiese__r16_04.jpg","assets/tiles/wiese__r16_05.jpg","assets/tiles/wiese__r16_06.jpg","assets/tiles/wiese__r16_07.jpg","assets/tiles/wiese__r16_10.jpg","assets/tiles/wiese__r16_11.jpg","assets/tiles/wiese__r16_12.jpg","assets/tiles/wiese__r16_13.jpg","assets/tiles/wiese__r16_14.jpg","assets/tiles/wiese__r16_15.jpg","assets/tiles/wiese__r16_16.jpg","assets/tiles/wiese__r16_20.jpg","assets/tiles/wiese__r16_21.jpg","assets/tiles/wiese__r16_22.jpg","assets/tiles/wiese__r16_23.jpg","assets/tiles/wiese__r16_24.jpg","assets/tiles/wiese__r16_25.jpg","assets/tiles/wiese__r16_26.jpg","assets/tiles/wiese__r16_27.jpg","assets/tiles/wiese__r16_30.jpg","assets/tiles/wiese__r16_31.jpg","assets/tiles/wiese__r16_32.jpg","assets/tiles/wiese__r16_33.jpg","assets/tiles/wiese__r16_35.jpg","assets/tiles/wiese__r16_36.jpg","assets/tiles/wiese__r16_37.jpg","assets/tiles/wiese__r16_40.jpg","assets/tiles/wiese__r16_41.jpg","assets/tiles/wiese__r16_42.jpg","assets/tiles/wiese__r16_45.jpg","assets/tiles/wiese__r16_46.jpg","assets/tiles/wiese__r16_47.jpg","assets/tiles/wiese__r16_50.jpg","assets/tiles/wiese__r16_53.jpg","assets/tiles/wiese__r16_62.jpg","assets/tiles/wiese__r16_63.jpg","assets/tiles/wiese__r16_65.jpg","assets/tiles/wiese__r16_73.jpg","assets/tiles/wiese__r16_74.jpg","assets/tiles/wiese__r16_75.jpg","assets/tiles/wiese__r24_03.jpg","assets/tiles/wiese__r32_00.jpg","assets/tiles/wiese__r32_01.jpg","assets/tiles/wiese__r32_02.jpg","assets/tiles/wiese__r32_04.jpg","assets/tiles/wiese__r32_05.jpg","assets/tiles/wiese__r32_12.jpg","assets/tiles/wiese__r32_21.jpg","assets/tiles/wiese__r32_22.jpg","assets/tiles/wiese__r32_24.jpg","assets/tiles/wiese__r32_25.jpg","assets/tiles/wiese__r32_33.jpg","assets/tiles/wiese__r40_02.jpg","assets/tiles/wiese__r40_10.jpg","assets/tiles/wiese__r40_11.jpg","assets/tiles/wiese__r40_12.jpg","assets/tiles/wiese__r40_22.jpg","assets/tiles/wiese__r4_00.jpg","assets/tiles/wiese__r4_02.jpg","assets/tiles/wiese__r4_03.jpg","assets/tiles/wiese__r4_04.jpg","assets/tiles/wiese__r4_10.jpg","assets/tiles/wiese__r4_11.jpg","assets/tiles/wiese__r4_13.jpg","assets/tiles/wiese__r4_14.jpg","assets/tiles/wiese__r4_15.jpg","assets/tiles/wiese__r4_17.jpg","assets/tiles/wiese__r4_20.jpg","assets/tiles/wiese__r4_22.jpg","assets/tiles/wiese__r4_23.jpg","assets/tiles/wiese__r4_24.jpg","assets/tiles/wiese__r4_27.jpg","assets/tiles/wiese__r4_34.jpg","assets/tiles/wiese__r4_53.jpg","assets/tiles/wiese__r4_60.jpg","assets/tiles/wiese__r4_63.jpg","assets/tiles/wiese__r4_67.jpg","assets/tiles/wiese__r4_70.jpg","assets/tiles/wiese__r4_72.jpg","assets/tiles/wiese__r4_75.jpg","assets/tiles/wiese__r4_76.jpg"]};
+function loadAssets(){
+  return fetch('assets/manifest.json').then(r=>r.json()).catch(()=>MANIFEST_EMBED).then(m=>{
+    manifest=m; const jobs=[];
+    for(const hab of HABS){ IMGS[hab]={};
+      for(const url of (m[hab]||[])){
+        const world=(url.split('__')[1]||'').split('_')[0]; // r0/r16/...
+        jobs.push(new Promise(res=>{
+          const im=new Image();
+          im.onload=()=>{ (IMGS[hab][world]=IMGS[hab][world]||[]).push(im); res(); };
+          im.onerror=()=>res(); im.src=url;
+        }));
+      }}
+    return Promise.all(jobs);
+  }).catch(()=>{manifest={};});
+}
+function poolFor(hab){
+  const byW=IMGS[hab]||{};
+  if(CFG.world!=='mix' && byW[CFG.world]?.length) return byW[CFG.world];
+  return Object.values(byW).flat();
+}
+function pickImg(hab){const p=poolFor(hab);return p.length?p[Math.floor(Math.random()*p.length)]:null;}
+
+/* Kanten-Farbprofil (visuelle Passung) */
+function edgeProfile(img){
+  if(img._prof) return img._prof;
+  const c=document.createElement('canvas'); c.width=c.height=24;
+  const x=c.getContext('2d'); x.drawImage(img,0,0,24,24);
+  const d=x.getImageData(0,0,24,24).data;
+  const pts=[[12,2],[21,12],[12,21],[2,12],[19,5],[19,19],[5,19],[5,5]];
+  img._prof=pts.map(([px,py])=>{const i=(py*24+px)*4;return[d[i],d[i+1],d[i+2]];});
+  return img._prof;
+}
+function colorDist(a,b){return Math.sqrt((a[0]-b[0])**2+(a[1]-b[1])**2+(a[2]-b[2])**2);}
+/* hex edges sample points in prof: E=1,W=3,NE=4,SE=5,SW=6,NW=7 — map dir i */
+function profIdx(i){ return CFG.shape==='hex' ? [1,4,3,6,5,7][i]??1 : i; }
+
+/* ================= Tiles ================= */
+function makeMono(h){return{kind:'mono',a:h,b:null,rot:0,imgA:pickImg(h),imgB:null,
+  edges(){return Array(S.edges).fill(this.a);}};}
+function makeDual(a,b){return{kind:'dual',a,b,rot:0,imgA:pickImg(a),imgB:pickImg(b),
+  edges(){const n=S.edges,half=n/2,e=Array(n);
+    for(let i=0;i<n;i++){const idx=((i-this.rot)%n+n)%n;e[i]=idx<half?this.a:this.b;}return e;}};}
+function cloneTile(t){const c=t.kind==='mono'?makeMono(t.a):makeDual(t.a,t.b);
+  c.rot=t.rot;c.imgA=t.imgA;c.imgB=t.imgB;return c;}
+
+function buildBag(){
+  const bag=[];
+  HABS.forEach(h=>{if(poolFor(h).length||CFG.world==='mix')for(let i=0;i<5;i++)bag.push(makeMono(h));});
+  if(CFG.duals) for(let i=0;i<HABS.length;i++)for(let j=i+1;j<HABS.length;j++){
+    if(!poolFor(HABS[i]).length&&CFG.world!=='mix')continue;
+    if(!poolFor(HABS[j]).length&&CFG.world!=='mix')continue;
+    bag.push(makeDual(HABS[i],HABS[j]));bag.push(makeDual(HABS[j],HABS[i]));
   }
-  function pixelToAxial(x,y){
-    return axialRound((Math.sqrt(3)/3*x - y/3)/SIZE, (2/3*y)/SIZE);
+  for(let i=bag.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[bag[i],bag[j]]=[bag[j],bag[i]];}
+  return bag;
+}
+
+/* ================= State ================= */
+const state={bag:[],market:[],placed:new Map(),selected:0,hover:null,turn:1,score:0,
+  bonus:0,view:{x:0,y:0,scale:1},dragging:false,dragStart:null,suggest:[],askedAt:0,qCount:0};
+const key=(q,r)=>q+','+r;
+
+/* ================= Canvas ================= */
+const land=document.getElementById('land'),hints=document.getElementById('hints'),
+      ghost=document.getElementById('ghost'),table=document.getElementById('table'),
+      wrap=document.getElementById('table-wrap'),tip=document.getElementById('tip');
+const ORIGIN={x:2500,y:2500};
+let pulseT=0, pulseRAF=null;
+
+function drawCover(ctx,img,s,fb){
+  if(img){const sc=Math.max(2*s/img.width,2*s/img.height),w=img.width*sc,h=img.height*sc;
+    ctx.drawImage(img,-w/2,-h/2,w,h);}
+  else{ctx.fillStyle=fb;ctx.fillRect(-s,-s,2*s,2*s);}
+}
+function paintTile(ctx,tile,cx,cy,s,opts={}){
+  ctx.save();ctx.translate(cx,cy);
+  if(!opts.noShadow){ctx.save();S.clip(ctx,s);
+    ctx.shadowColor='rgba(0,0,0,.45)';ctx.shadowBlur=14;ctx.shadowOffsetY=6;
+    ctx.fillStyle='#000';ctx.fill();ctx.restore();}
+  ctx.save();S.clip(ctx,s);ctx.clip();
+  if(tile.kind==='mono'){drawCover(ctx,tile.imgA,s,HCOL[tile.a]);}
+  else{
+    ctx.save();S.half(ctx,0,tile.rot,s);ctx.clip();drawCover(ctx,tile.imgA,s,HCOL[tile.a]);ctx.restore();
+    ctx.save();S.half(ctx,1,tile.rot,s);ctx.clip();drawCover(ctx,tile.imgB,s,HCOL[tile.b]);ctx.restore();
+    ctx.strokeStyle='rgba(255,255,255,.18)';ctx.lineWidth=2;
+    if(CFG.shape==='hex'){const a=-Math.PI/2+tile.rot*Math.PI/3+Math.PI/2;
+      ctx.beginPath();ctx.moveTo(Math.cos(a)*-s,Math.sin(a)*-s);ctx.lineTo(Math.cos(a)*s,Math.sin(a)*s);ctx.stroke();}
+    else{const r=((tile.rot%4)+4)%4;ctx.beginPath();
+      r%2===0?(ctx.moveTo(-s,0),ctx.lineTo(s,0)):(ctx.moveTo(0,-s),ctx.lineTo(0,s));ctx.stroke();}
   }
-  function hexCorners(cx,cy,s=SIZE){
-    const pts=[];
-    for(let i=0;i<6;i++){
-      const a=-Math.PI/2+i*Math.PI/3;
-      pts.push([cx+s*Math.cos(a), cy+s*Math.sin(a)]);
+  /* Habitat-Kantenring */
+  const e=tile.edges();
+  for(let i=0;i<S.edges;i++){
+    const col=HCOL[e[i]];
+    if(CFG.shape==='hex'){const a0=-Math.PI/2+i*Math.PI/3,a1=a0+Math.PI/3;
+      ctx.beginPath();ctx.arc(0,0,s*.99,a0,a1);ctx.arc(0,0,s*.88,a1,a0,true);ctx.closePath();}
+    else{const h=s*.99,w=s*.11;ctx.beginPath();
+      if(i===0)ctx.rect(-h,-h,2*h,2*w);else if(i===1)ctx.rect(h-2*w,-h,2*w,2*h);
+      else if(i===2)ctx.rect(-h,h-2*w,2*h,2*w);else ctx.rect(-h,-h,2*w,2*h);}
+    ctx.fillStyle=col;ctx.globalAlpha=.32;ctx.fill();ctx.globalAlpha=1;
+  }
+  const vg=ctx.createRadialGradient(0,0,s*.5,0,0,s*1.05);
+  vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(20,12,6,.28)');
+  ctx.fillStyle=vg;ctx.fillRect(-s,-s,2*s,2*s);
+  ctx.restore();
+  S.clip(ctx,s);
+  ctx.strokeStyle=opts.selected?'#d9a45b':'rgba(30,20,10,.65)';
+  ctx.lineWidth=opts.selected?4:2.5;ctx.stroke();
+  ctx.restore();
+}
+
+function resizeLayers(){
+  [land,hints].forEach(c=>{c.width=5000;c.height=5000;c.style.width='5000px';c.style.height='5000px';});
+  const g=Math.ceil(S.size*2.2);
+  ghost.width=g;ghost.height=g;ghost.style.width=g+'px';ghost.style.height=g+'px';
+}
+function applyView(){const r=wrap.getBoundingClientRect();
+  table.style.transform=`translate(${r.width/2+state.view.x}px,${r.height/2+state.view.y}px) scale(${state.view.scale}) translate(${-ORIGIN.x}px,${-ORIGIN.y}px)`;}
+
+/* ================= Passung ================= */
+function validPlacements(){
+  if(!state.placed.size)return[{q:0,r:0}];
+  const c=new Map();
+  for(const cell of state.placed.values())
+    S.dirs.forEach(([dq,dr])=>{const k=key(cell.q+dq,cell.r+dr);
+      if(!state.placed.has(k))c.set(k,{q:cell.q+dq,r:cell.r+dr});});
+  return[...c.values()];
+}
+function edgeMatch(q,r,tile){
+  const e=tile.edges();let m=0,t=0,visual=0,vn=0;
+  S.dirs.forEach(([dq,dr],i)=>{
+    const nb=state.placed.get(key(q+dq,r+dr));if(!nb)return;
+    t++;const opp=(i+S.edges/2)%S.edges;
+    if(nb.tile.edges()[opp]===e[i])m++;
+    /* visuelle Passung: Kantenfarben der Bilder */
+    const myImg=(e[i]===tile.a)?tile.imgA:tile.imgB;
+    const nbImg=(nb.tile.edges()[opp]===nb.tile.a)?nb.tile.imgA:nb.tile.imgB;
+    if(myImg&&nbImg){
+      const pa=edgeProfile(myImg)[profIdx(i)],pb=edgeProfile(nbImg)[profIdx(opp)];
+      visual+=Math.max(0,1-colorDist(pa,pb)/255);vn++;
     }
-    return pts;
+  });
+  return{m,t,vis:vn?visual/vn:0};
+}
+/* Bewertung für Agent: Habitat-Fit + Optik-Fit + Gruppenwachstum */
+function scorePlacement(q,r,tile){
+  const em=edgeMatch(q,r,tile);
+  let score=em.m*10+em.vis*8+(em.t===0?2:0);
+  /* Gruppenwachstum bevorzugen */
+  const e=tile.edges();
+  S.dirs.forEach(([dq,dr],i)=>{
+    const nb=state.placed.get(key(q+dq,r+dr));if(!nb)return;
+    const opp=(i+S.edges/2)%S.edges;
+    if(nb.tile.edges()[opp]===e[i])score+=3;
+  });
+  return score;
+}
+function computeSuggestions(){
+  const tile=state.market[state.selected];if(!tile)return[];
+  const out=[];
+  for(const p of validPlacements()){
+    for(let rot=0;rot<S.edges;rot++){
+      const t=cloneTile(tile);t.rot=rot;
+      const sc=scorePlacement(p.q,p.r,t);
+      out.push({q:p.q,r:p.r,rot,score:sc,em:edgeMatch(p.q,p.r,t)});
+    }
   }
+  out.sort((a,b)=>b.score-a.score);
+  return out.slice(0,3);
+}
 
-  const state = {
-    catalog: [], images: new Map(),
-    bag: [], market: [], placed: new Map(),
-    selected: 0, hover: null,
-    turn: 1, maxTurns: 16, score: 0,
-    view: {x:0,y:0,scale:1},
-    dragging: false, dragStart: null,
-  };
+/* ================= Redraw ================= */
+function redrawAll(){
+  const ctx=land.getContext('2d');ctx.clearRect(0,0,land.width,land.height);
+  for(const cell of state.placed.values()){
+    const p=S.toPix(cell.q,cell.r,S.size);
+    paintTile(ctx,cell.tile,ORIGIN.x+p.x,ORIGIN.y+p.y,S.size);
+  }
+  redrawHints();redrawGhost();
+}
+function redrawHints(){
+  const ctx=hints.getContext('2d');ctx.clearRect(0,0,hints.width,hints.height);
+  if(!state.market.length)return;
+  const tile=state.market[state.selected];
+  const sugKeys=new Map(state.suggest.map(s=>[key(s.q,s.r),s]));
+  for(const{q,r}of validPlacements()){
+    const p=S.toPix(q,r,S.size),cx=ORIGIN.x+p.x,cy=ORIGIN.y+p.y;
+    const mm=edgeMatch(q,r,tile),sug=sugKeys.get(key(q,r));
+    ctx.save();ctx.translate(cx,cy);
+    S.clip(ctx,S.size*.94);
+    const fit=mm.t?(mm.m/mm.t):0.3;
+    if(sug){ /* Puls */
+      const pulse=0.5+0.5*Math.sin(pulseT*0.12+(q*7+r*13));
+      ctx.fillStyle=`rgba(217,164,91,${0.18+0.15*pulse})`;
+      ctx.strokeStyle=`rgba(140,220,150,${0.75+0.25*pulse})`;
+      ctx.lineWidth=3.5+2*pulse;
+    }else{
+      ctx.fillStyle='rgba(217,164,91,.10)';
+      ctx.strokeStyle=fit===1?'rgba(140,220,150,.7)':'rgba(217,164,91,.55)';
+      ctx.lineWidth=2;ctx.setLineDash([7,5]);
+    }
+    ctx.fill();ctx.stroke();ctx.setLineDash([]);ctx.restore();
+    if(mm.t){ctx.fillStyle='#f3ead9';ctx.font='bold 13px system-ui';ctx.textAlign='center';
+      ctx.strokeStyle='rgba(0,0,0,.6)';ctx.lineWidth=3;
+      ctx.strokeText(mm.m+'/'+mm.t,cx,cy+5);ctx.fillText(mm.m+'/'+mm.t,cx,cy+5);}
+    if(sug){ctx.fillStyle='#8cdc96';ctx.font='bold 15px system-ui';ctx.textAlign='center';
+      ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=3;
+      ctx.strokeText('✨',cx,cy-14);ctx.fillText('✨',cx,cy-14);}
+  }
+}
+function redrawGhost(){
+  const g=ghost.getContext('2d');g.clearRect(0,0,ghost.width,ghost.height);
+  if(!state.market.length||!state.hover){ghost.style.display='none';tip.style.display='none';return;}
+  const tile=state.market[state.selected];
+  paintTile(g,tile,ghost.width/2,ghost.height/2,S.size*.97,{selected:true,noShadow:true});
+  /* Fit-Glow */
+  const mm=edgeMatch(state.hover.q,state.hover.r,tile);
+  if(mm.t){const fit=mm.m/mm.t;
+    g.save();g.translate(ghost.width/2,ghost.height/2);S.clip(g,S.size*.97);
+    g.strokeStyle=fit===1?'rgba(140,220,150,.95)':fit>0?'rgba(232,192,96,.95)':'rgba(224,112,96,.9)';
+    g.lineWidth=5;g.stroke();g.restore();}
+  const p=S.toPix(state.hover.q,state.hover.r,S.size);
+  ghost.style.display='block';
+  ghost.style.left=(ORIGIN.x+p.x-ghost.width/2)+'px';
+  ghost.style.top=(ORIGIN.y+p.y-ghost.height/2)+'px';
+  /* Tooltip */
+  const names=tile.kind==='mono'?HNAME[tile.a]:HNAME[tile.a]+' + '+HNAME[tile.b];
+  const fitTxt=mm.t?`${mm.m}/${mm.t} Kanten passend`:'freie Fläche';
+  tip.innerHTML=`${names}<div class="fit" style="color:${mm.t?(mm.m?'#8cdc96':'#e07060'):'#c9b89a'}">${fitTxt}</div>`;
+  tip.style.display='block';
+}
+function pulseLoop(){
+  pulseT++;redrawHints();
+  if(state.suggest.length)pulseRAF=requestAnimationFrame(pulseLoop);
+  else pulseRAF=null;
+}
+function setSuggestions(list){
+  state.suggest=list||[];
+  if(state.suggest.length&&!pulseRAF)pulseRAF=requestAnimationFrame(pulseLoop);
+  redrawHints();
+}
 
-  const land=document.getElementById('land');
-  const hints=document.getElementById('hints');
-  const ghost=document.getElementById('ghost');
-  const table=document.getElementById('table');
-  const wrap=document.getElementById('table-wrap');
+/* ================= Market / HUD ================= */
+function renderMarket(){
+  const root=document.getElementById('market');root.innerHTML='';
+  state.market.forEach((tile,i)=>{
+    const slot=document.createElement('button');
+    slot.className='slot'+(i===state.selected?' sel':'');slot.type='button';
+    const c=document.createElement('canvas');c.width=168;c.height=168;
+    paintTile(c.getContext('2d'),tile,84,84,78,{selected:i===state.selected,noShadow:true});
+    slot.appendChild(c);
+    const idx=document.createElement('div');idx.className='idx';idx.textContent=String(i+1);
+    slot.appendChild(idx);
+    slot.onmouseenter=()=>{if(i!==state.selected){state.selected=i;renderMarket();redrawHints();redrawGhost();}};
+    slot.onclick=()=>{state.selected=i;renderMarket();redrawHints();redrawGhost();};
+    root.appendChild(slot);
+  });
+}
+function status(t){document.getElementById('status').textContent=t;}
+function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('on');
+  setTimeout(()=>el.classList.remove('on'),1000);}
+function computeScore(){
+  const visited=new Set(),best=Object.fromEntries(HABS.map(h=>[h,0]));
+  const habsOn=t=>t.kind==='mono'?[t.a]:[t.a,t.b];
+  for(const cell of state.placed.values())for(const hid of habsOn(cell.tile)){
+    const sk=key(cell.q,cell.r)+'|'+hid;if(visited.has(sk))continue;
+    let n=0;const q=[cell];visited.add(sk);
+    while(q.length){const c=q.pop();n++;
+      S.dirs.forEach(([dq,dr],i)=>{
+        if(c.tile.edges()[i]!==hid)return;
+        const nb=state.placed.get(key(c.q+dq,c.r+dr));if(!nb)return;
+        if(nb.tile.edges()[(i+S.edges/2)%S.edges]!==hid)return;
+        const vk=key(c.q+dq,c.r+dr)+'|'+hid;if(visited.has(vk))return;
+        visited.add(vk);q.push(nb);});}
+    if(n>best[hid])best[hid]=n;
+  }
+  return{best,total:HABS.reduce((s,h)=>s+best[h],0)+state.bonus};
+}
+function hud(){
+  document.getElementById('turn').textContent=String(Math.min(state.turn,CFG.turns));
+  document.getElementById('maxturn').textContent=String(CFG.turns);
+  document.getElementById('score').textContent=String(computeScore().total);
+  document.getElementById('bonus').textContent=String(state.bonus);
+  document.getElementById('pill-bonus').style.display=state.bonus?'':'none';
+  document.getElementById('pill-shape').textContent=CFG.shape==='hex'?'⬡ Hex':'◼ Quad';
+  document.getElementById('pill-world').textContent='🎨 '+WORLDS[CFG.world];
+  document.getElementById('pill-mode').textContent={free:'Frei',game:'Spiel',learn:'Lernen'}[CFG.mode]+
+    (CFG.mode==='learn'?` · ${SUBJNAME[CFG.subject]} ${CFG.level}`:'');
+  document.getElementById('btn-end').disabled=CFG.mode==='free'?false:(state.turn<=CFG.turns&&state.market.length>0);
+}
 
-  function cloneSpec(s){
-    return {
-      ...s,
-      features: (s.features||[]).slice(),
-      dual: s.dual ? s.dual.slice() : null,
-      rot: s.rot||0,
+/* ================= Agent: Landschafter ================= */
+const alog=document.getElementById('agentlog');
+function botSay(html,tone){
+  const d=document.createElement('div');d.className='amsg bot'+(tone?' '+tone:'');d.innerHTML=html;
+  alog.appendChild(d);alog.scrollTop=alog.scrollHeight;
+}
+function userSay(t){const d=document.createElement('div');d.className='amsg user';d.textContent=t;
+  alog.appendChild(d);alog.scrollTop=alog.scrollHeight;}
+const TIPS=[
+ 'Drehe die Kachel, bis <b>gleiche Biotope</b> aneinanderliegen — der Randring zeigt die Biotope an den Kanten.',
+ 'Eine <b>große</b> Waldfläche schlägt drei kleine. Baue lieber an bestehende Flächen an.',
+ 'Mit ✨ <b>Vorschlag</b> pulse ich die drei besten Felder — Optik und Regeln zusammen.',
+ 'Kacheln aus <b>einer Welt</b> (🎨 oben) sehen zusammen wie ein Gemälde. Wechsel unter ⚙.',
+ 'Hover zeigt dir vor dem Legen, wie viele Kanten passen — <b>grün</b> = perfekt.',
+ 'Fluss an Fluss sieht am besten aus — Wasser sucht Wasser.'];
+function agentReply(text){
+  const t=text.toLowerCase();
+  if(/vorschlag|schlag vor|wohin|wo hin/.test(t)) return doSuggest(true);
+  if(/punkte|score|stand/.test(t)){
+    const{best,total}=computeScore();
+    const top=HABS.map(h=>[h,best[h]]).sort((a,b)=>b[1]-a[1])[0];
+    return botSay(`Aktuell <b>${total} Punkte</b>. Größte Fläche: <b>${HNAME[top[0]]}</b> (${top[1]}). Bonus durch Lernen: ${state.bonus}.`);
+  }
+  if(/regel/.test(t)) return botSay(`Modus <b>${{free:'Frei',game:'Spiel',learn:'Lernspiel'}[CFG.mode]}</b> · ${CFG.turns} Züge · ${CFG.strict?'strikte Kantenpflicht':'freies Legen'} · ${CFG.duals?'mit':'ohne'} Dual-Kacheln${CFG.mode==='learn'?` · ${SUBJNAME[CFG.subject]}, ${LEVELNAME[CFG.level]}`:''}. Ändern unter ⚙.`);
+  if(/tipp/.test(t)) return botSay(TIPS[Math.floor(Math.random()*TIPS.length)]);
+  if(/warum/.test(t)&&state.suggest.length){
+    const s=state.suggest[0];
+    return botSay(`Das pulsierende Top-Feld passt <b>${s.em.m}/${s.em.t}</b> Kanten im Biotop und ähnelt den Nachbarfarben zu ${Math.round(s.em.vis*100)}%. Deshalb ✨.`);
+  }
+  if(/dreh/.test(t)) return botSay('Taste <b>R</b> oder der ⟳-Button dreht die gewählte Kachel — jede Drehung verändert, welches Biotop an welcher Kante liegt.');
+  if(/neu|restart/.test(t)) return botSay('„Neu“ oben rechts startet frisch — Einstellungen bleiben gespeichert.');
+  if(/lern|schule|fach/.test(t)) return botSay('Im Modus <b>Lernen</b> (⚙) kommt nach jeweils 3 Kacheln eine Frage aus deinem Fach — richtig = +1 Bonuspunkt. Fach & Stufe wählst du selbst.');
+  if(/wer bist|was bist/.test(t)) return botSay('Ich bin der <b>Landschafter</b> 🧭 — dein Legespiel-Assistent. Ich laufe komplett offline in deinem Browser.');
+  return botSay('Ich kann: <b>vorschlag</b> · <b>punkte</b> · <b>regeln</b> · <b>tipp</b> · <b>warum</b>. Oder sag mir, wonach du suchst!');
+}
+function doSuggest(withText){
+  if(!state.market.length)return botSay('Der Markt ist leer.');
+  const sug=computeSuggestions();setSuggestions(sug);
+  const s=sug[0];
+  const t=state.market[state.selected];
+  if(s.rot!==t.rot){t.rot=s.rot;renderMarket();}
+  if(withText)botSay(`✨ Beste Felder pulsieren. Top-Feld: <b>${s.em.m}/${s.em.t}</b> Kanten passend${s.em.t?` · Optik ${Math.round(s.em.vis*100)}%`:''}. Kachel habe ich passend gedreht — nur noch anklicken!`,'good');
+  status('✨ pulsierende Felder = beste Vorschläge');
+}
+function agentComment(q,r,tile,mm){
+  if(!CFG.agentOn)return;
+  if(mm.t&&mm.m===mm.t)botSay(`<b>Perfekt gelegt!</b> ${mm.m}/${mm.t} Kanten — die Landschaft dankt es dir. 🌿`,'good');
+  else if(mm.t&&mm.m===0)botSay(`${mm.t} Nachbarn, aber keine Kante passt. Beim nächsten Mal erst drehen — oder mich mit ✨ fragen.`,'warn');
+  else if(mm.t)botSay(`Solide: ${mm.m}/${mm.t} Kanten passend.`,'');
+  const{best}=computeScore();
+  const grown=HABS.some(h=>best[h]>=5&&best[h]%5===0);
+  if(grown){const h=HABS.find(h=>best[h]>=5&&best[h]%5===0);
+    botSay(`Dein <b>${HNAME[h]}</b> ist jetzt eine stolze Fläche von ${best[h]}! 🎉`,'good');}
+}
+
+/* ================= Lernspiel ================= */
+function maybeQuestion(done){
+  if(CFG.mode!=='learn')return done();
+  if(state.turn-state.askedAt<3)return done();
+  state.askedAt=state.turn;
+  const bank=QUESTIONS[CFG.subject][CFG.level];
+  const qq=bank[Math.floor(Math.random()*bank.length)];
+  state.qCount++;
+  const opts=qq.o.map((t,i)=>({t,i}));
+  for(let i=opts.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[opts[i],opts[j]]=[opts[j],opts[i]];}
+  const modal=document.getElementById('modal'),bg=document.getElementById('modal-bg');
+  modal.innerHTML=`<span class="qtag">${SUBJNAME[CFG.subject]} · ${LEVELNAME[CFG.level]}</span>
+    <h1 style="font-size:1.25rem;margin:0 0 12px">${qq.q}</h1><div id="qbox"></div>`;
+  bg.classList.add('on');
+  const box=modal.querySelector('#qbox');
+  opts.forEach(o=>{
+    const b=document.createElement('button');b.className='qopt';b.textContent=o.t;
+    b.onclick=()=>{
+      if(o.i===qq.a){state.bonus++;botSay(`Richtig! <b>+1 Bonuspunkt</b> 🎓`,'good');toast('Richtig! +1');}
+      else{botSay(`Knapp daneben — richtig wäre „${qq.o[qq.a]}“. Weiter geht's!`,'warn');}
+      bg.classList.remove('on');hud();done();
     };
-  }
-
-  async function loadAssets(){
-    const res = await fetch('assets/manifest.json');
-    const manifest = await res.json();
-    state.catalog = manifest;
-    await Promise.all(manifest.map(t => new Promise((resolve,reject)=>{
-      const img = new Image();
-      img.onload=()=>{ state.images.set(t.id, img); resolve(); };
-      img.onerror=()=>reject(new Error('fail '+t.file));
-      img.src = t.file;
-    })));
-  }
-
-  function paintTile(ctx, tile, cx, cy, s, opts={}){
-    const img = state.images.get(tile.id);
-    ctx.save();
-    ctx.translate(cx,cy);
-    ctx.rotate((tile.rot||0) * Math.PI/3);
-    // clip hex
-    const pts = hexCorners(0,0,s);
-    ctx.beginPath();
-    pts.forEach((p,i)=> i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));
-    ctx.closePath();
-    ctx.clip();
-    if(img){
-      ctx.drawImage(img, -s, -s, s*2, s*2);
-    } else {
-      ctx.fillStyle='#456';
-      ctx.fill();
-    }
-    ctx.restore();
-    // rim
-    ctx.beginPath();
-    hexCorners(cx,cy,s).forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));
-    ctx.closePath();
-    ctx.strokeStyle = opts.selected ? '#f0a35e' : 'rgba(20,24,32,.65)';
-    ctx.lineWidth = opts.selected ? 4 : 2;
-    ctx.stroke();
-  }
-
-  function biomesOf(tile){
-    if(tile.dual) return new Set(tile.dual);
-    return new Set([tile.biome]);
-  }
-
-  function shuffle(a){
-    for(let i=a.length-1;i>0;i--){
-      const j=Math.floor(Math.random()*(i+1));
-      [a[i],a[j]]=[a[j],a[i]];
-    }
-    return a;
-  }
-
-  function buildBag(){
-    // prefer variety: all feature tiles + mix of mono/dual
-    const feats = state.catalog.filter(t=> (t.features||[]).length);
-    const base = state.catalog.filter(t=> !(t.features||[]).length);
-    const bag = shuffle(feats.map(cloneSpec).concat(shuffle(base.map(cloneSpec)).slice(0, 40)));
-    return bag;
-  }
-
-  function refillMarket(){
-    while(state.market.length<4 && state.bag.length) state.market.push(state.bag.pop());
-    if(state.selected>=state.market.length) state.selected=Math.max(0,state.market.length-1);
-  }
-
-  function validPlacements(){
-    if(!state.placed.size) return [{q:0,r:0}];
-    const c=new Map();
-    for(const {q,r} of state.placed.values()){
-      DIRS.forEach(([dq,dr])=>{
-        const nq=q+dq,nr=r+dr,k=key(nq,nr);
-        if(!state.placed.has(k)) c.set(k,{q:nq,r:nr});
-      });
-    }
-    return [...c.values()];
-  }
-
-  function edgeMatch(q,r,tile){
-    // biome adjacency score
-    let match=0,total=0;
-    DIRS.forEach(([dq,dr])=>{
-      const n=state.placed.get(key(q+dq,r+dr));
-      if(!n) return;
-      total++;
-      const A=biomesOf(tile), B=biomesOf(n.tile);
-      for(const b of A){ if(B.has(b)){ match++; break; } }
-    });
-    return {match,total};
-  }
-
-  function featureBonus(){
-    let bonus=0;
-    const feats=new Set();
-    for(const c of state.placed.values()){
-      (c.tile.features||[]).forEach(f=>feats.add(f));
-      if((c.tile.features||[]).includes('bruecke')) bonus+=2;
-      if((c.tile.features||[]).includes('sturzbruecke')) bonus+=1;
-      if((c.tile.features||[]).includes('hoehle')) bonus+=2;
-      if((c.tile.features||[]).includes('wasserfall')) bonus+=3;
-      if((c.tile.features||[]).includes('abzweig')) bonus+=1;
-      if((c.tile.features||[]).includes('ereignis')) bonus+=2;
-      if((c.tile.features||[]).includes('ruine')) bonus+=2;
-    }
-    return {bonus, feats:[...feats]};
-  }
-
-  function computeScore(){
-    // largest connected component per biome (cell shares biome)
-    const best=Object.fromEntries(BIOME_SCORE.map(b=>[b,0]));
-    const visited=new Set();
-    for(const cell of state.placed.values()){
-      for(const bio of biomesOf(cell.tile)){
-        if(!BIOME_SCORE.includes(bio)) continue;
-        const sk=key(cell.q,cell.r)+'|'+bio;
-        if(visited.has(sk)) continue;
-        let n=0; const q=[cell]; visited.add(sk);
-        while(q.length){
-          const c=q.pop(); n++;
-          DIRS.forEach(([dq,dr])=>{
-            const nb=state.placed.get(key(c.q+dq,c.r+dr));
-            if(!nb || !biomesOf(nb.tile).has(bio)) return;
-            const vk=key(nb.q,nb.r)+'|'+bio;
-            if(visited.has(vk)) return;
-            visited.add(vk); q.push(nb);
-          });
-        }
-        if(n>best[bio]) best[bio]=n;
-      }
-    }
-    const {bonus,feats}=featureBonus();
-    const total=BIOME_SCORE.reduce((s,b)=>s+best[b],0)+bonus;
-    return {best,bonus,feats,total};
-  }
-
-  function resize(){
-    [land,hints].forEach(c=>{c.width=4000;c.height=4000;c.style.width='4000px';c.style.height='4000px';});
-    ghost.width=SIZE*2+16; ghost.height=SIZE*2+16;
-    ghost.style.width=ghost.width+'px'; ghost.style.height=ghost.height+'px';
-  }
-  function applyView(){
-    const rect=wrap.getBoundingClientRect();
-    table.style.transform=`translate(${rect.width/2+state.view.x}px,${rect.height/2+state.view.y}px) scale(${state.view.scale}) translate(${-ORIGIN.x}px,${-ORIGIN.y}px)`;
-  }
-
-  function redrawAll(){
-    const ctx=land.getContext('2d');
-    ctx.clearRect(0,0,4000,4000);
-    const g=ctx.createRadialGradient(ORIGIN.x,ORIGIN.y,80,ORIGIN.x,ORIGIN.y,1400);
-    g.addColorStop(0,'#243448'); g.addColorStop(1,'#152030');
-    ctx.fillStyle=g; ctx.fillRect(0,0,4000,4000);
-    // sort by y for mild depth
-    const cells=[...state.placed.values()].sort((a,b)=>a.r-b.r || a.q-b.q);
-    for(const cell of cells){
-      const p=axialToPixel(cell.q,cell.r);
-      paintTile(ctx, cell.tile, ORIGIN.x+p.x, ORIGIN.y+p.y, SIZE);
-    }
-    redrawHints(); redrawGhost();
-  }
-  function redrawHints(){
-    const ctx=hints.getContext('2d');
-    ctx.clearRect(0,0,4000,4000);
-    if(!state.market.length) return;
-    const tile=state.market[state.selected];
-    for(const {q,r} of validPlacements()){
-      const p=axialToPixel(q,r);
-      const cx=ORIGIN.x+p.x, cy=ORIGIN.y+p.y;
-      const m=edgeMatch(q,r,tile);
-      ctx.beginPath();
-      hexCorners(cx,cy,SIZE*0.92).forEach((pt,i)=>i?ctx.lineTo(pt[0],pt[1]):ctx.moveTo(pt[0],pt[1]));
-      ctx.closePath();
-      ctx.fillStyle='rgba(240,163,94,.16)';
-      ctx.strokeStyle=(m.total&&m.match===m.total)?'rgba(125,206,160,.95)':'rgba(240,163,94,.85)';
-      ctx.lineWidth=2.5; ctx.setLineDash([6,4]); ctx.fill(); ctx.stroke(); ctx.setLineDash([]);
-      if(m.total){
-        ctx.fillStyle='#eef3f8'; ctx.font='bold 12px system-ui'; ctx.textAlign='center';
-        ctx.fillText(m.match+'/'+m.total, cx, cy+4);
-      }
-    }
-  }
-  function redrawGhost(){
-    const g=ghost.getContext('2d');
-    g.clearRect(0,0,ghost.width,ghost.height);
-    if(!state.market.length||!state.hover){ghost.style.display='none';return;}
-    paintTile(g, state.market[state.selected], ghost.width/2, ghost.height/2, SIZE*0.95, {selected:true});
-    const p=axialToPixel(state.hover.q,state.hover.r);
-    ghost.style.display='block';
-    ghost.style.left=(ORIGIN.x+p.x-ghost.width/2)+'px';
-    ghost.style.top=(ORIGIN.y+p.y-ghost.height/2)+'px';
-  }
-  function renderMarket(){
-    const root=document.getElementById('market');
-    root.innerHTML='';
-    state.market.forEach((tile,i)=>{
-      const slot=document.createElement('button');
-      slot.type='button';
-      slot.className='slot'+(i===state.selected?' sel':'');
-      const c=document.createElement('canvas');
-      c.width=160; c.height=176;
-      paintTile(c.getContext('2d'), tile, 80, 88, 62, {selected:i===state.selected});
-      slot.appendChild(c);
-      const idx=document.createElement('div'); idx.className='idx'; idx.textContent=String(i+1); slot.appendChild(idx);
-      const tag=document.createElement('div'); tag.className='tag'; tag.textContent=tile.label||tile.biome; slot.appendChild(tag);
-      slot.onclick=()=>{state.selected=i; renderMarket(); redrawHints(); redrawGhost();};
-      root.appendChild(slot);
-    });
-  }
-  function setStatus(t){document.getElementById('status').textContent=t;}
-  function updateHUD(){
-    document.getElementById('turn').textContent=String(state.turn);
-    document.getElementById('maxturn').textContent=String(state.maxTurns);
-    document.getElementById('score').textContent=String(state.score);
-    document.getElementById('btn-end').disabled = state.turn<=state.maxTurns && state.market.length>0;
-  }
-  function toast(m){
-    const el=document.getElementById('toast');
-    el.textContent=m; el.classList.add('on');
-    setTimeout(()=>el.classList.remove('on'),900);
-  }
-
-  function startGame(){
-    document.getElementById('boot').classList.remove('on');
-    state.bag=buildBag();
-    state.market=[]; state.placed=new Map();
-    state.selected=0; state.turn=1; state.score=0;
-    state.view={x:0,y:0,scale:1};
-    // starter: meadow/forest dual if available else first
-    let starter = state.catalog.find(t=>t.dual && t.dual.includes('wiese') && t.dual.includes('wald'));
-    if(!starter) starter = state.catalog.find(t=>t.biome==='wiese') || state.catalog[0];
-    starter = cloneSpec(starter); starter.rot=1;
-    state.placed.set(key(0,0), {q:0,r:0,tile:starter});
-    refillMarket();
-    resize(); applyView(); redrawAll(); renderMarket(); updateHUD();
-    setStatus('Kachel wählen · R drehen · gelbes Feld · Landschaft wächst');
-  }
-
-  function clientToTable(cx,cy){
-    const rect=wrap.getBoundingClientRect();
-    return {
-      x:(cx-rect.left-rect.width/2-state.view.x)/state.view.scale+ORIGIN.x,
-      y:(cy-rect.top-rect.height/2-state.view.y)/state.view.scale+ORIGIN.y
-    };
-  }
-
-  wrap.addEventListener('pointerdown', e=>{
-    if(e.button===1||e.button===2||e.altKey||e.shiftKey){
-      state.dragging=true;
-      state.dragStart={x:e.clientX,y:e.clientY,vx:state.view.x,vy:state.view.y};
-      wrap.setPointerCapture(e.pointerId);
-    }
+    box.appendChild(b);
   });
-  wrap.addEventListener('pointermove', e=>{
-    if(state.dragging&&state.dragStart){
-      state.view.x=state.dragStart.vx+(e.clientX-state.dragStart.x);
-      state.view.y=state.dragStart.vy+(e.clientY-state.dragStart.y);
-      applyView(); return;
-    }
-    const pt=clientToTable(e.clientX,e.clientY);
-    const ax=pixelToAxial(pt.x-ORIGIN.x, pt.y-ORIGIN.y);
-    const hit=validPlacements().find(p=>p.q===ax.q&&p.r===ax.r)||null;
-    const prev=state.hover; state.hover=hit;
-    if(prev?.q!==hit?.q||prev?.r!==hit?.r) redrawGhost();
-  });
-  wrap.addEventListener('pointerup', ()=>{state.dragging=false; state.dragStart=null;});
-  wrap.addEventListener('pointerleave', ()=>{state.hover=null; redrawGhost();});
-  wrap.addEventListener('contextmenu', e=>e.preventDefault());
-  wrap.addEventListener('wheel', e=>{
-    e.preventDefault();
-    state.view.scale=Math.min(2.2, Math.max(0.35, state.view.scale*(e.deltaY>0?0.9:1.1)));
-    applyView();
-  }, {passive:false});
-  wrap.addEventListener('click', e=>{
-    if(e.altKey||e.shiftKey||!state.market.length) return;
-    const pt=clientToTable(e.clientX,e.clientY);
-    const ax=pixelToAxial(pt.x-ORIGIN.x, pt.y-ORIGIN.y);
-    if(!validPlacements().some(p=>p.q===ax.q&&p.r===ax.r)) return;
-    const tile=cloneSpec(state.market[state.selected]);
-    state.placed.set(key(ax.q,ax.r), {q:ax.q,r:ax.r,tile});
-    state.market.splice(state.selected,1);
-    refillMarket();
-    const sc=computeScore(); state.score=sc.total;
-    state.turn++; state.hover=null;
-    renderMarket(); redrawAll(); updateHUD();
-    const feats=(tile.features||[]);
-    if(state.turn>state.maxTurns || !state.market.length){
-      setStatus('Landschaft steht.');
-      showScore(true);
-    } else {
-      const m=edgeMatch(ax.q,ax.r,tile);
-      setStatus((feats.length?feats.join(', ')+' · ':'')+(m.total?`Anschluss ${m.match}/${m.total}`:'Weiter legen'));
-    }
-  });
+}
 
-  document.getElementById('btn-rot').onclick=()=>{
-    if(!state.market.length) return;
-    state.market[state.selected].rot = ((state.market[state.selected].rot||0)+1)%6;
-    renderMarket(); redrawHints(); redrawGhost(); toast('60°');
+/* ================= Flow ================= */
+function refillMarket(){
+  while(state.market.length<4&&state.bag.length)state.market.push(state.bag.pop());
+  if(state.selected>=state.market.length)state.selected=Math.max(0,state.market.length-1);
+}
+function startGame(){
+  S=SHAPES[CFG.shape];
+  document.getElementById('rotdeg').textContent=S.rotStep+'°';
+  document.getElementById('boot').classList.remove('on');
+  state.bag=buildBag();state.market=[];state.placed=new Map();
+  state.selected=0;state.turn=1;state.bonus=0;state.askedAt=0;state.qCount=0;
+  state.view={x:0,y:0,scale:1};setSuggestions([]);
+  const starter=makeDual('wiese','wald');starter.rot=CFG.shape==='hex'?1:0;
+  state.placed.set('0,0',{q:0,r:0,tile:starter});
+  refillMarket();resizeLayers();applyView();redrawAll();renderMarket();hud();
+  document.getElementById('main').classList.toggle('agenton',CFG.agentOn);
+  alog.innerHTML='';
+  botSay(`Willkommen in <b>${WORLDS[CFG.world]}</b>! ${CFG.shape==='hex'?'⬡ Hexagon':'◼ Quadrat'} · ${CFG.turns} Züge${CFG.mode==='learn'?` · Lernspiel ${SUBJNAME[CFG.subject]}`:''}.<br>Ich schlage dir passende Felder vor — drück <b>✨</b>.`);
+  if(CFG.suggestAuto)setTimeout(()=>doSuggest(false),400);
+  status('Wähle Kachel · R drehen · anlegen. ✨ = beste Felder.');
+}
+function placeAt(q,r){
+  const tile=state.market[state.selected];
+  if(CFG.strict){
+    const mm=edgeMatch(q,r,tile);
+    if(mm.t&&mm.m===0){toast('⚠ Kante muss passen (strikter Modus)');return;}
+  }
+  state.placed.set(key(q,r),{q,r,tile:cloneTile(tile)});
+  const mm=edgeMatch(q,r,state.placed.get(key(q,r)).tile);
+  state.market.splice(state.selected,1);refillMarket();
+  state.turn++;state.hover=null;setSuggestions([]);
+  renderMarket();redrawAll();hud();
+  toast(`Gelegt${mm.t?` · ${mm.m}/${mm.t} passend`:''}`);
+  agentComment(q,r,tile,mm);
+  const finish=()=>{
+    if(CFG.mode!=='free'&&(state.turn>CFG.turns||!state.market.length)){showScore(true);}
+    else if(CFG.suggestAuto)setTimeout(()=>doSuggest(false),250);
   };
-  window.addEventListener('keydown', e=>{
-    if(e.key==='r'||e.key==='R'||e.key===' '){e.preventDefault(); document.getElementById('btn-rot').click();}
-    if(e.key>='1'&&e.key<='4'){const i=+e.key-1; if(i<state.market.length){state.selected=i; renderMarket(); redrawHints(); redrawGhost();}}
-  });
-  document.getElementById('btn-zoomin').onclick=()=>{state.view.scale=Math.min(2.2,state.view.scale*1.15); applyView();};
-  document.getElementById('btn-zoomout').onclick=()=>{state.view.scale=Math.max(0.35,state.view.scale/1.15); applyView();};
-  document.getElementById('btn-score').onclick=()=>showScore(false);
-  document.getElementById('btn-end').onclick=()=>showScore(true);
-  document.getElementById('btn-new').onclick=()=>{if(confirm('Neue Landschaft?')) startGame();};
-  document.getElementById('btn-start').onclick=startGame;
-  document.getElementById('btn-help').onclick=()=>{
-    const bg=document.getElementById('modal-bg');
-    const m=document.getElementById('modal');
-    m.innerHTML=`<div class="kicker">Regeln</div>
-      <h1 style="font-size:1.25rem;margin:0 0 8px">Landschaft legen</h1>
-      <p>1. Markt-Kachel wählen (1–4)<br>
-      2. <strong>R</strong> drehen — Wege/Flüsse/Brücken drehen mit<br>
-      3. An gelbe Nachbarn legen<br>
-      4. Punkte: große Biotop-Flächen + Bonus für Höhle, Brücke, Wasserfall, Abzweig, Ereignis, Ruine<br>
-      5. <a class="link" href="DRUCK.html">Druckbögen</a> zum Ausschneiden (1:1 mm)</p>
-      <div class="row"><button class="btn primary" id="ok">OK</button></div>`;
-    bg.classList.add('on');
-    document.getElementById('ok').onclick=()=>bg.classList.remove('on');
+  maybeQuestion(finish);
+}
+function showScore(final){
+  const{best,total}=computeScore();state.score=total;hud();
+  const modal=document.getElementById('modal'),bg=document.getElementById('modal-bg');
+  modal.innerHTML=`<div class="kicker">${final?'Fertige Landschaft':'Zwischenwertung'}</div>
+    <h1 style="margin:0 0 8px;font-size:1.4rem">${total} Punkte</h1>
+    <p>Größte zusammenhängende Fläche je Biotop${state.bonus?` + ${state.bonus} Lernbonus`:''}.</p>
+    ${HABS.map(h=>`<div class="scoreline"><span>${HNAME[h]}</span><span>${best[h]}</span></div>`).join('')}
+    ${state.bonus?`<div class="scoreline"><span>🎓 Lernbonus (${state.qCount} Fragen)</span><span>${state.bonus}</span></div>`:''}
+    <div class="row"><button class="btn primary" id="ok">${final?'Neue Landschaft':'Weiter'}</button></div>`;
+  bg.classList.add('on');
+  modal.querySelector('#ok').onclick=()=>{bg.classList.remove('on');if(final)startGame();};
+  if(final)botSay(`<b>${total} Punkte!</b> ${state.bonus?`Davon ${state.bonus} durch richtige Antworten. `:''}Neue Runde? Ich bin bereit. 🧭`);
+}
+
+/* ================= Config-UI ================= */
+function cfgBlock(){
+  const el=document.getElementById('cfg-boot');
+  const grp=(label,key,opts,small)=>`
+    <div><label>${label}</label><div class="opts" data-k="${key}">
+      ${opts.map(([v,t])=>`<button class="${small?'small':''}" data-v="${v}">${t}</button>`).join('')}
+    </div></div>`;
+  el.innerHTML=
+    grp('Feldform','shape',[['hex','⬡ Hexagon'],['quad','◼ Quadrat']])+
+    grp('Welt (Stil der Kacheln)','world',Object.entries(WORLDS),1)+
+    grp('Modus','mode',[['free','🧩 Frei'],['game','🏆 Spiel'],['learn','🎓 Lernspiel']])+
+    grp('Regeln: Kanten','strict',[['false','Frei legen'],['true','Muss passen']])+
+    grp('Dual-Kacheln','duals',[['true','An'],['false','Aus']])+
+    grp('Züge','turns',[['12','12'],['18','18'],['24','24']])+
+    grp('Fach (Lernspiel)','subject',Object.entries(SUBJNAME),1)+
+    grp('Anspruch','level',[['1',LEVELNAME[1]],['2',LEVELNAME[2]],['3',LEVELNAME[3]]])+
+    grp('Landschafter-Agent','agentOn',[['true','An'],['false','Aus']])+
+    grp('Auto-Vorschläge','suggestAuto',[['true','An'],['false','Aus']]);
+  const paint=()=>{
+    el.querySelectorAll('.opts').forEach(g=>{
+      const k=g.dataset.k;
+      g.querySelectorAll('button').forEach(b=>{
+        let v=b.dataset.v; if(v==='true')v=true; else if(v==='false')v=false; else if(!isNaN(+v)&&v!=='')v=+v;
+        b.classList.toggle('on',CFG[k]===v);
+      });});
   };
+  el.onclick=e=>{
+    const b=e.target.closest('button[data-v]');if(!b)return;
+    const g=b.parentElement,k=g.dataset.k;
+    let v=b.dataset.v; if(v==='true')v=true; else if(v==='false')v=false; else if(!isNaN(+v)&&v!=='')v=+v;
+    CFG[k]=v;saveCfg();paint();
+  };
+  paint();
+}
 
-  function showScore(final){
-    const {best,bonus,feats,total}=computeScore();
-    state.score=total; updateHUD();
-    const names={berg:'Berg',wald:'Wald',wiese:'Wiese',moor:'Moor',fluss:'Fluss'};
-    const bg=document.getElementById('modal-bg');
-    const m=document.getElementById('modal');
-    m.innerHTML=`<div class="kicker">${final?'Partie':'Zwischenwertung'}</div>
-      <h1 style="margin:0 0 8px;font-size:1.4rem">${total} Punkte</h1>
-      <p>Flächen + Merkmalsbonus (${bonus})</p>
-      ${BIOME_SCORE.map(b=>`<div class="scoreline"><span>${names[b]}</span><span>${best[b]}</span></div>`).join('')}
-      <div class="scoreline"><span>Merkmale</span><span>${feats.join(', ')||'—'}</span></div>
-      <div class="row" style="margin-top:14px">
-        <button class="btn primary" id="ok">${final?'Neu':'Weiter'}</button>
-        <a class="btn" href="DRUCK.html">Drucken</a>
-      </div>`;
-    bg.classList.add('on');
-    document.getElementById('ok').onclick=()=>{bg.classList.remove('on'); if(final) startGame();};
-  }
+/* ================= Pointer ================= */
+function clientToTable(cx,cy){const r=wrap.getBoundingClientRect();
+  return{x:(cx-r.left-r.width/2-state.view.x)/state.view.scale+ORIGIN.x,
+         y:(cy-r.top-r.height/2-state.view.y)/state.view.scale+ORIGIN.y};}
+wrap.addEventListener('pointerdown',e=>{
+  if(e.button===1||e.button===2||e.altKey||e.shiftKey){
+    state.dragging=true;state.dragStart={x:e.clientX,y:e.clientY,vx:state.view.x,vy:state.view.y};
+    wrap.setPointerCapture(e.pointerId);}
+});
+wrap.addEventListener('pointermove',e=>{
+  if(state.dragging&&state.dragStart){
+    state.view.x=state.dragStart.vx+(e.clientX-state.dragStart.x);
+    state.view.y=state.dragStart.vy+(e.clientY-state.dragStart.y);applyView();return;}
+  const pt=clientToTable(e.clientX,e.clientY);
+  const ax=S.toAxial(pt.x-ORIGIN.x,pt.y-ORIGIN.y,S.size);
+  const hit=validPlacements().find(p=>p.q===ax.q&&p.r===ax.r);
+  const prev=state.hover;state.hover=hit||null;
+  if(hit){tip.style.left=(e.clientX+16)+'px';tip.style.top=(e.clientY+14)+'px';}
+  if(prev?.q!==state.hover?.q||prev?.r!==state.hover?.r)redrawGhost();
+});
+wrap.addEventListener('pointerup',()=>{state.dragging=false;state.dragStart=null;});
+wrap.addEventListener('pointerleave',()=>{state.hover=null;redrawGhost();});
+wrap.addEventListener('click',e=>{
+  if(e.altKey||e.shiftKey||!state.market.length)return;
+  const pt=clientToTable(e.clientX,e.clientY);
+  const ax=S.toAxial(pt.x-ORIGIN.x,pt.y-ORIGIN.y,S.size);
+  if(validPlacements().some(p=>p.q===ax.q&&p.r===ax.r))placeAt(ax.q,ax.r);
+});
+wrap.addEventListener('wheel',e=>{e.preventDefault();
+  state.view.scale=Math.min(2.2,Math.max(.3,state.view.scale*(e.deltaY>0?.9:1.1)));applyView();
+},{passive:false});
+wrap.addEventListener('contextmenu',e=>e.preventDefault());
 
-  window.addEventListener('resize', applyView);
-
-  loadAssets().then(()=>{
-    document.getElementById('loading').remove();
-    document.getElementById('app').hidden=false;
-    document.getElementById('boot').classList.add('on');
-    setStatus('Bereit');
-  }).catch(err=>{
-    document.getElementById('loading').textContent='Fehler beim Laden: '+err.message;
+/* ================= Pipeline (AiTHENTiSCH-Backend) ================= */
+/* App = Frontend. Die Pipeline speichert Spielstände und beantwortet
+   Fragen über den HEXAGON-AL Spiel-Tisch. Offline? Alles fällt lokal zurück. */
+const IMG_CACHE={};
+function imgPath(img){
+  if(!img||!img.src)return null;
+  const m=String(img.src).match(/assets\/[^?#]+/);
+  return m?m[0]:null;
+}
+function tileJSON(t){
+  return{kind:t.kind,a:t.a,b:t.b,rot:t.rot,imgA:imgPath(t.imgA),imgB:imgPath(t.imgB)};
+}
+function loadImgCached(path){
+  if(!path)return Promise.resolve(null);
+  if(IMG_CACHE[path])return Promise.resolve(IMG_CACHE[path]);
+  return new Promise(res=>{
+    const im=new Image();
+    im.onload=()=>{IMG_CACHE[path]=im;res(im);};
+    im.onerror=()=>res(null);
+    im.src=path;
   });
+}
+function gameStateJSON(){
+  const{best,total}=computeScore();state.score=total;
+  return{
+    version:1, app:'HEXAGON-AL', savedAt:new Date().toISOString(),
+    cfg:Object.assign({},CFG),
+    turn:state.turn, score:total, bonus:state.bonus, selected:state.selected,
+    askedAt:state.askedAt, qCount:state.qCount,
+    view:{x:state.view.x,y:state.view.y,scale:state.view.scale},
+    bag:state.bag.map(tileJSON),
+    market:state.market.map(tileJSON),
+    placed:[...state.placed.values()].map(c=>({q:c.q,r:c.r,tile:tileJSON(c.tile)}))
+  };
+}
+async function restoreGame(saved){
+  if(!saved||saved.app!=='HEXAGON-AL')throw new Error('Kein HEXAGON-AL Spielstand.');
+  /* 1) alle referenzierten Bilder laden */
+  const paths=new Set();
+  [saved.bag||[],saved.market||[]].forEach(list=>list.forEach(t=>{if(t.imgA)paths.add(t.imgA);if(t.imgB)paths.add(t.imgB);}));
+  (saved.placed||[]).forEach(c=>{if(c.tile.imgA)paths.add(c.tile.imgA);if(c.tile.imgB)paths.add(c.tile.imgB);});
+  await Promise.all([...paths].map(loadImgCached));
+  /* 2) Konfiguration + Zustand wiederherstellen */
+  Object.assign(CFG,saved.cfg||{});saveCfg();
+  S=SHAPES[CFG.shape];
+  const mkTile=t=>{
+    const c=t.kind==='mono'?makeMono(t.a):makeDual(t.a,t.b);
+    c.rot=t.rot||0;
+    if(t.imgA&&IMG_CACHE[t.imgA])c.imgA=IMG_CACHE[t.imgA];
+    if(t.imgB&&IMG_CACHE[t.imgB])c.imgB=IMG_CACHE[t.imgB];
+    return c;
+  };
+  state.bag=(saved.bag||[]).map(mkTile);
+  state.market=(saved.market||[]).map(mkTile);
+  state.placed=new Map();
+  (saved.placed||[]).forEach(c=>state.placed.set(key(c.q,c.r),{q:c.q,r:c.r,tile:mkTile(c.tile)}));
+  state.selected=Math.min(saved.selected||0,Math.max(0,state.market.length-1));
+  state.turn=saved.turn||1;state.bonus=saved.bonus||0;
+  state.askedAt=saved.askedAt||0;state.qCount=saved.qCount||0;
+  state.view=Object.assign({x:0,y:0,scale:1},saved.view||{});
+  state.hover=null;setSuggestions([]);
+  /* 3) Oberfläche aufbauen */
+  document.getElementById('rotdeg').textContent=S.rotStep+'°';
+  document.getElementById('boot').classList.remove('on');
+  resizeLayers();applyView();redrawAll();renderMarket();hud();cfgBlock();
+  document.getElementById('main').classList.toggle('agenton',CFG.agentOn);
+}
+function boardSummary(){
+  const{best,total}=computeScore();
+  const counts={};state.placed.forEach(c=>{counts[c.tile.a]=(counts[c.tile.a]||0)+1;if(c.tile.b)counts[c.tile.b]=(counts[c.tile.b]||0)+1;});
+  const flaechen=HABS.map(h=>`${HNAME[h]}:${best[h]||0}`).join(', ');
+  const markt=state.market.map(t=>t.kind==='mono'?HNAME[t.a]:`${HNAME[t.a]}/${HNAME[t.b]}`).join(' · ');
+  return `Zug ${state.turn}/${CFG.turns}, Punkte ${total}. `+
+    `${state.placed.size} Plättchen gelegt (${Object.entries(counts).map(([h,n])=>`${HNAME[h]}×${n}`).join(', ')||'keine'}). `+
+    `Größte Flächen: ${flaechen}. Markt: ${markt||'leer'}. `+
+    `Modus ${CFG.mode}, Form ${CFG.shape}, ${CFG.strict?'strikte Kantenpflicht':'freies Legen'}.`;
+}
+function cloudSave(){
+  if(!window.HEXAL_API)return toast('☁ Backend-Client fehlt');
+  const slot=(prompt('Slot-Name für diese Landschaft:','landschaft')||'').trim();
+  if(!slot)return;
+  status('☁ speichere in der Pipeline …');
+  HEXAL_API.saveState(slot,gameStateJSON())
+    .then(()=>{toast(`☁ gespeichert: ${slot}`);status(`☁ „${slot}“ liegt in der Pipeline.`);})
+    .catch(err=>{toast('☁ fehlgeschlagen');status(`☁ ${err.message||'Backend nicht erreichbar'}`);});
+}
+function cloudLoad(){
+  if(!window.HEXAL_API)return toast('☁ Backend-Client fehlt');
+  status('☁ frage Pipeline nach Slots …');
+  HEXAL_API.listStates().then(d=>{
+    const names=(d.states||[]).map(s=>s.name);
+    const hint=names.length?`Verfügbar: ${names.join(', ')}`:'(noch keine Slots vorhanden)';
+    const slot=(prompt(`Welche Landschaft laden?\n${hint}`,names[0]||'landschaft')||'').trim();
+    if(!slot){status('Bereit.');return;}
+    status(`☁ lade „${slot}“ …`);
+    HEXAL_API.loadState(slot)
+      .then(d=>restoreGame(d.state))
+      .then(()=>{toast(`☁ geladen: ${slot}`);status(`☁ „${slot}“ wiederhergestellt.`);botSay(`Landschaft <b>${slot}</b> ist zurück aus der Pipeline. Weiterbauen! 🌿`,'good');})
+      .catch(err=>{toast('☁ Laden fehlgeschlagen');status(`☁ ${err.message}`);});
+  }).catch(err=>{toast('☁ Backend nicht erreichbar');status(`☁ ${err.message||'kein Kontakt'}`);});
+}
+/* Freitext-Fragen gehen an den Spiel-Tisch (Pipeline). Schnellfragen bleiben lokal. */
+function agentReplyBackend(t){
+  botSay('<i>⏳ frage den Tisch in der Pipeline …</i>');
+  HEXAL_API.askTisch('HEXAGON-AL Frage: '+t, boardSummary()+`\n\nFrage des Spielers: ${t}`)
+    .then(r=>{
+      const text=(r.final_artifact||'').trim();
+      if(text)botSay(text.replace(/\n/g,'<br>'));
+      else botSay('Der Tisch war still. Versuch es lokal: <b>vorschlag</b> · <b>punkte</b> · <b>tipp</b>.','warn');
+    })
+    .catch(()=>agentReply(t)); /* offline → lokaler Landschafter */
+}
+
+/* ================= Buttons/Keys ================= */
+function rotateSelected(){
+  if(!state.market.length)return;
+  const t=state.market[state.selected];t.rot=(t.rot+1)%S.edges;
+  renderMarket();redrawHints();redrawGhost();toast('gedreht');
+  if(CFG.suggestAuto)setSuggestions([]);
+}
+document.getElementById('btn-rot').onclick=rotateSelected;
+document.getElementById('btn-suggest').onclick=()=>doSuggest(true);
+document.getElementById('btn-agent').onclick=()=>{
+  CFG.agentOn=!CFG.agentOn;saveCfg();
+  document.getElementById('main').classList.toggle('agenton',CFG.agentOn);
+};
+document.getElementById('btn-cfg').onclick=()=>{document.getElementById('boot').classList.add('on');};
+document.getElementById('btn-new').onclick=()=>{if(confirm('Neue Landschaft?'))startGame();};
+document.getElementById('btn-cloud-save').onclick=cloudSave;
+document.getElementById('btn-cloud-load').onclick=cloudLoad;
+document.getElementById('btn-zoomin').onclick=()=>{state.view.scale=Math.min(2.2,state.view.scale*1.15);applyView();};
+document.getElementById('btn-zoomout').onclick=()=>{state.view.scale=Math.max(.3,state.view.scale/1.15);applyView();};
+document.getElementById('btn-end').onclick=()=>showScore(true);
+document.getElementById('btn-start').onclick=startGame;
+window.addEventListener('keydown',e=>{
+  if(e.key==='r'||e.key==='R'||e.key===' '){e.preventDefault();rotateSelected();}
+  if(e.key>='1'&&e.key<='4'){const i=+e.key-1;
+    if(i<state.market.length){state.selected=i;renderMarket();redrawHints();redrawGhost();}}
+});
+document.getElementById('agentform').addEventListener('submit',e=>{
+  e.preventDefault();
+  const inp=document.getElementById('agentin'),t=inp.value.trim();if(!t)return;
+  userSay(t);inp.value='';
+  /* Freitext → Pipeline-Tisch (mit lokalem Fallback). Schnell-Keywords bleiben lokal & sofort. */
+  const local=/vorschlag|schlag vor|wohin|punkte|score|stand|regel|tipp|warum|dreh|neu|restart|lern|schule|fach|wer bist|was bist/i.test(t);
+  if(!local&&window.HEXAL_API)setTimeout(()=>agentReplyBackend(t),150);
+  else setTimeout(()=>agentReply(t),200);
+});
+document.querySelectorAll('.quickrow button').forEach(b=>{
+  b.onclick=()=>{userSay(b.dataset.q);setTimeout(()=>agentReply(b.dataset.q),200);};
+});
+
+/* ================= Boot ================= */
+if(location.protocol==='file:'){document.getElementById('status').textContent='Läuft lokal von Datei — alles funktioniert, aber http://127.0.0.1:8788 ist der Hauptweg.';}
+const lb=document.getElementById('loadbar');lb.classList.add('on');
+cfgBlock();
+loadAssets().then(()=>{lb.classList.remove('on');
+  document.getElementById('main').classList.toggle('agenton',CFG.agentOn);
+  document.getElementById('btn-start').disabled=false;});
+/* Pipeline-Status anzeigen: erreichbar = Tisch online, sonst bleibt alles lokal. */
+if(window.HEXAL_API){
+  HEXAL_API.health().then(()=>{
+    const sub=document.querySelector('.asub');
+    if(sub)sub.textContent='legt mit dir · Pipeline online ☁';
+  }).catch(()=>{/* offline: Standardtext bleibt */});
+}
+window.addEventListener('resize',applyView);
 })();
 </script>
 </body>
